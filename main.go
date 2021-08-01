@@ -18,23 +18,10 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/hugdubois/svc-fizzbuzz/core"
+	"github.com/hugdubois/svc-fizzbuzz/cmd"
 )
 
+// main manages command execution
 func main() {
-	fizzbuzz, err := core.FizzBuzz(
-		core.FizzBuzzParams{
-			Limit: 10,
-			Int1:  3,
-			Str1:  "fizzzz",
-			Int2:  5,
-			Str2:  "buzzzz",
-		},
-	)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("%#v", fizzbuzz)
+	cmd.Execute()
 }
