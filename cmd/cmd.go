@@ -1,3 +1,4 @@
+// Package cmd provides the command line interface (cli).
 package cmd
 
 import "time"
