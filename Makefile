@@ -20,11 +20,18 @@ test-cover:
 	@echo "$(NAME): test-cover task"
 	@go test ./... -cover
 
-test-cover-report:
-	@echo "$(NAME): test-cover-report task"
+test-cover-profile:
+	@echo "$(NAME): test-cover-profile task"
 	@mkdir -p _build
 	@go test ./... -coverprofile=_build/coverage.out
+
+test-cover-report: test-cover-profile
+	@echo "$(NAME): test-cover-report task"
 	@go tool cover -html=_build/coverage.out
+
+test-cover-func: test-cover-profile
+	@echo "$(NAME): test-cover-total task"
+	@go tool cover -func=_build/coverage.out
 
 serve: build
 	@echo "$(NAME): serve task"
