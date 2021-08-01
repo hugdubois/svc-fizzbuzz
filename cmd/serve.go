@@ -33,7 +33,7 @@ Curl examples:
   $ curl -X GET    http://localhost%[1]s/metrics
   $ curl -X GET    http://localhost%[1]s/status
   $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz
-  $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz?limit=70&mul1=7&mul1=9&word1=bon&word2=coin
+  $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz?limit=70&int1=7&int2=9&str1=bon&str2=coin
   $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz/top
   $ curl -X GET    http://localhost%[1]s/api/v1/hits`, DefautAddress),
 		Run: func(cmd *cobra.Command, args []string) {

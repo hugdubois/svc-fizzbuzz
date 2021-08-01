@@ -24,9 +24,10 @@ var (
 
   $ svc-fizzbuzz serve
 
-curl examples:
+Curl examples:
   $ curl -X GET    http://localhost%[1]s/
   $ curl -X GET    http://localhost%[1]s/version
+  $ curl -X GET    http://localhost%[1]s/metrics
   $ curl -X GET    http://localhost%[1]s/status`, DefautAddress),
 	}
 )
