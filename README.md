@@ -49,6 +49,6 @@ todo
 - [ ] test coverage >~ 80% (core 100%)
 - [ ] good documentation
 - [ ] (bonus) add a cache
-- [ ] docker / docker-compose
+- [x] docker / docker-compose
 - [ ] simple k8s service
 - [ ] (extra bonus) exposes an openapi / swagger file

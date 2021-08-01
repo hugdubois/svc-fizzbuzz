@@ -1,0 +1,70 @@
+version: "3"
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  http:
+    driver: bridge
+  monitoring-front:
+    driver: bridge
+  monitoring-back:
+    driver: bridge
+
+services:
+  svc-fizzbuzz:
+    build: ./
+    image: hugdubois/svc-fizzbuzz:${TAG}
+    command: serve
+    ports:
+      - 8383:13000
+    networks:
+      - monitoring-back
+      - http
+
+  prometheus:
+    image: prom/prometheus:v2.28.1
+    # container_name: svc-fizzbuzz-prometheus
+    volumes:
+      - ./infra/prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--web.enable-lifecycle'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    expose:
+      - 9090
+    ports:
+      - 9090:9090
+    depends_on:
+      - svc-fizzbuzz
+
+    networks:
+      - monitoring-back
+
+  grafana:
+    image: grafana/grafana:7.5.10
+    # container_name: svc-fizzbuzz-grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    env_file:
+      - infra/config.monitoring
+    networks:
+      - monitoring-back
+      - monitoring-front
+
+  cadvisor:
+    image: google/cadvisor:v0.33.0
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080
+    networks:
+      - monitoring-back
