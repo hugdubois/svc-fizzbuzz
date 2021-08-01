@@ -11,8 +11,17 @@ import (
 
 func Test_ServeCmd(t *testing.T) {
 	srv := getServer()
-	if got, want := srv.Addr, defautAddress; got != want {
-		t.Fatalf("Server addres flag error, got %s but want %s", got, want)
+
+	if got, want := srv.Addr, DefautAddress; got != want {
+		t.Fatalf("Server address flag error, got %s but want %s", got, want)
+	}
+
+	if got, want := srv.ReadTimeout, DefaultReadTimeout; got != want {
+		t.Fatalf("Server read-timeout flag error, got %s but want %s", got, want)
+	}
+
+	if got, want := srv.WriteTimeout, DefaultWriteTimeout; got != want {
+		t.Fatalf("Server write-timeout flag error, got %s but want %s", got, want)
 	}
 
 	currentDebugMode := debugMode

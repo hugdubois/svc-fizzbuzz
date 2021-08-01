@@ -10,8 +10,6 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/service"
 )
 
-const defautAddress = ":13000"
-
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
@@ -29,7 +27,7 @@ var (
 curl examples:
   $ curl -X GET    http://localhost%[1]s/
   $ curl -X GET    http://localhost%[1]s/version
-  $ curl -X GET    http://localhost%[1]s/status`, defautAddress),
+  $ curl -X GET    http://localhost%[1]s/status`, DefautAddress),
 	}
 )
 

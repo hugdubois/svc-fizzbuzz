@@ -18,6 +18,8 @@ var (
 	debugMode          bool
 	serverAddress      string
 	shutdownTimeout    time.Duration
+	readTimeout        time.Duration
+	writeTimeout       time.Duration
 	corsAllowedOrigins string
 
 	serveCmd = &cobra.Command{
@@ -33,7 +35,7 @@ Curl examples:
   $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz
   $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz?limit=70&mul1=7&mul1=9&word1=bon&word2=coin
   $ curl -X GET    http://localhost%[1]s/api/v1/fizzbuzz/top
-  $ curl -X GET    http://localhost%[1]s/api/v1/hits`, defautAddress),
+  $ curl -X GET    http://localhost%[1]s/api/v1/hits`, DefautAddress),
 		Run: func(cmd *cobra.Command, args []string) {
 			serve()
 		},
@@ -44,16 +46,58 @@ func init() {
 	rootCmd.AddCommand(serveCmd)
 
 	// force debug mode
-	serveCmd.PersistentFlags().BoolVarP(&debugMode, "debug", "d", false, "Force debug mode")
+	serveCmd.PersistentFlags().BoolVarP(
+		&debugMode,
+		"debug",
+		"d",
+		false,
+		"Force debug mode",
+	)
 
 	// address flag
-	serveCmd.PersistentFlags().StringVarP(&serverAddress, "address", "a", defautAddress, "HTTP server address")
+	serveCmd.PersistentFlags().StringVarP(
+		&serverAddress,
+		"address",
+		"a",
+		DefautAddress,
+		"HTTP server address",
+	)
 
-	// address flag
-	serveCmd.PersistentFlags().DurationVarP(&shutdownTimeout, "shutdown-timeout", "t", 10*time.Second, "shutdown timeout (5s,5m,5h) before connections are cancelled)")
+	// shutdownTimeout flag
+	serveCmd.PersistentFlags().DurationVarP(
+		&shutdownTimeout,
+		"shutdown-timeout",
+		"",
+		DefaultShutdownTimeout,
+		"shutdown timeout (5s,5m,5h) before connections are cancelled",
+	)
+
+	// readTimeout flag
+	serveCmd.PersistentFlags().DurationVarP(
+		&readTimeout,
+		"read-timeout",
+		"",
+		DefaultReadTimeout,
+		"read timeout (5s,5m,5h) before connection is cancelled",
+	)
+
+	// readTimeout flag
+	serveCmd.PersistentFlags().DurationVarP(
+		&writeTimeout,
+		"write-timeout",
+		"",
+		DefaultWriteTimeout,
+		"write timeout (5s,5m,5h) before connection is cancelled",
+	)
 
 	// cors flag
-	serveCmd.PersistentFlags().StringVarP(&corsAllowedOrigins, "cors-origin", "c", "*", "Cross Origin Resource Sharing AllowedOrigins (string) separed by | ex: http://*domain1.com|http://*example.com")
+	serveCmd.PersistentFlags().StringVarP(
+		&corsAllowedOrigins,
+		"cors-origin",
+		"c",
+		DefaultCors,
+		"Cross Origin Resource Sharing AllowedOrigins (string) separed by | ex: http://*domain1.com|http://*domain2.com",
+	)
 
 	// Here you will define your flags and configuration settings.
 }
@@ -90,8 +134,10 @@ func initLogger() {
 func getServer() *http.Server {
 	mux := svc.NewRouter(corsAllowedOrigins)
 	return &http.Server{
-		Addr:    serverAddress,
-		Handler: mux,
+		Addr:         serverAddress,
+		Handler:      mux,
+		ReadTimeout:  readTimeout,
+		WriteTimeout: writeTimeout,
 	}
 }
 
@@ -116,7 +162,12 @@ func waitForShutdown(srv *http.Server) {
 
 // start the http server
 func launchServer(srv *http.Server) {
-	log.Printf("%s listening on %s with %v timeout", svcName, serverAddress, shutdownTimeout)
+	log.Printf(
+		"%s listening on %s with %v timeout",
+		svcName,
+		serverAddress,
+		shutdownTimeout,
+	)
 	if err := srv.ListenAndServe(); err != nil {
 		if err != http.ErrServerClosed {
 			log.Fatal(err)
