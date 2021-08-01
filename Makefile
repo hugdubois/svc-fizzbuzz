@@ -1,4 +1,5 @@
 NAME = svc-fizzbuzz
+VERSION = $(shell cat VERSION)
 
 build:
 	@echo "$(NAME): build task"
@@ -11,3 +12,7 @@ build:
 test:
 	@echo "$(NAME): test task"
 	@go test ./...
+
+update-pkg-cache:
+	GOPROXY=https://proxy.golang.org GO111MODULE=on \
+		go get github.com/hugdubois/svc-fizzbuzz@v$(VERSION)
