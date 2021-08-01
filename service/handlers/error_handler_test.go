@@ -24,6 +24,7 @@ func Test_ErrorHandler(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Got an error when reading body: %s", err.Error())
 	}
+
 	var errorMsg ErrorMessage
 	err = json.Unmarshal(data, &errorMsg)
 	if err != nil {

@@ -18,13 +18,11 @@ func assertRecover(t *testing.T, url string, fn http.HandlerFunc) {
 	ts := httptest.NewServer(RecoverMiddleware(http.DefaultServeMux))
 	defer ts.Close()
 
-	var (
-		req  *http.Request
-		resp *http.Response
-	)
+	var resp *http.Response
+
+	req, _ := http.NewRequest("GET", ts.URL+url, nil)
 
 	outputLog := helpers.CaptureOutput(func() {
-		req, _ = http.NewRequest("GET", ts.URL+url, nil)
 		resp, _ = http.DefaultClient.Do(req)
 	})
 
