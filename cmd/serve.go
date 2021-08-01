@@ -15,9 +15,10 @@ import (
 
 // serveCmd represents the serve command
 var (
-	debugMode       bool
-	serverAddress   string
-	shutdownTimeout time.Duration
+	debugMode          bool
+	serverAddress      string
+	shutdownTimeout    time.Duration
+	corsAllowedOrigins string
 
 	serveCmd = &cobra.Command{
 		Use:   "serve",
@@ -51,20 +52,30 @@ func init() {
 	// address flag
 	serveCmd.PersistentFlags().DurationVarP(&shutdownTimeout, "shutdown-timeout", "t", 10*time.Second, "shutdown timeout (5s,5m,5h) before connections are cancelled)")
 
+	// cors flag
+	serveCmd.PersistentFlags().StringVarP(&corsAllowedOrigins, "cors-origin", "c", "*", "Cross Origin Resource Sharing AllowedOrigins (string) separed by | ex: http://*domain1.com|http://*example.com")
+
 	// Here you will define your flags and configuration settings.
 }
 
 func serve() {
 	initLogger()
-	log.Infof("%s version %s - %s", svc.Name, svc.Version, svcName)
 
+	log.Infof("%s version %s - %s", svc.Name, svc.Version, svcName)
+	log.WithFields(log.Fields{
+		"address":            serverAddress,
+		"shutdownTimeout":    shutdownTimeout,
+		"corsAllowedOrigins": corsAllowedOrigins,
+	}).Debug("Flags")
+
+	// Got service router and launch a gracefull shutdown server
 	srv := getServer()
 	go launchServer(srv)
 	waitForShutdown(srv)
 }
 
+// initalize the logger with debug mode if is needed
 func initLogger() {
-	// initalize the debug mode
 	if strings.HasSuffix(svc.Version, "+dev") || debugMode {
 		log.SetLevel(log.DebugLevel)
 		log.WithFields(log.Fields{
@@ -73,16 +84,18 @@ func initLogger() {
 			"FullName": fmt.Sprintf("%s-%s", svc.Name, svc.Version),
 		}).Debug("set log debug level")
 	}
-
 }
 
+// Got service router and return a http server
 func getServer() *http.Server {
-	log.WithFields(log.Fields{"address": serverAddress, "shutdownTimeout": shutdownTimeout}).Debug("Flags")
-	// Got service router and launch a gracefull shutdown server
-	mux := svc.NewRouter()
-	return &http.Server{Addr: serverAddress, Handler: mux}
+	mux := svc.NewRouter(corsAllowedOrigins)
+	return &http.Server{
+		Addr:    serverAddress,
+		Handler: mux,
+	}
 }
 
+// gracefull shutdown
 func waitForShutdown(srv *http.Server) {
 	stop := make(chan os.Signal)
 	signal.Notify(stop, os.Interrupt)
@@ -101,6 +114,7 @@ func waitForShutdown(srv *http.Server) {
 	log.Printf("%s down\n", svcName)
 }
 
+// start the http server
 func launchServer(srv *http.Server) {
 	log.Printf("%s listening on %s with %v timeout", svcName, serverAddress, shutdownTimeout)
 	if err := srv.ListenAndServe(); err != nil {

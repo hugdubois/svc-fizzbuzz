@@ -26,7 +26,7 @@ func Test_StatusHandler(t *testing.T) {
 	var statusMsg StatusResponse
 
 	svc := NewService()
-	ts := httptest.NewServer(svc.NewRouter())
+	ts := httptest.NewServer(svc.NewRouter("*"))
 	defer ts.Close()
 
 	var resp *http.Response
@@ -61,7 +61,7 @@ func Test_StatusHandler(t *testing.T) {
 
 func Test_VersionHandler(t *testing.T) {
 	svc := NewService()
-	ts := httptest.NewServer(svc.NewRouter())
+	ts := httptest.NewServer(svc.NewRouter("*"))
 	defer ts.Close()
 
 	var resp *http.Response
@@ -101,7 +101,7 @@ func Test_Index(t *testing.T) {
 	var versionMsg Service
 
 	svc := NewService()
-	ts := httptest.NewServer(svc.NewRouter())
+	ts := httptest.NewServer(svc.NewRouter("*"))
 	defer ts.Close()
 
 	var resp *http.Response
@@ -142,7 +142,7 @@ func Test_NotFound(t *testing.T) {
 	var notFoundMsg handlers.ErrorMessage
 
 	svc := NewService()
-	ts := httptest.NewServer(svc.NewRouter())
+	ts := httptest.NewServer(svc.NewRouter("*"))
 	defer ts.Close()
 
 	var resp *http.Response

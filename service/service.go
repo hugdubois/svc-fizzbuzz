@@ -29,7 +29,7 @@ func NewService() *Service {
 }
 
 // NewRouter provides a http.serverMux
-func (svc Service) NewRouter() *http.ServeMux {
+func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	router := http.NewServeMux()
 
 	useMiddleware := middlewares.UseMiddleware(
@@ -37,6 +37,8 @@ func (svc Service) NewRouter() *http.ServeMux {
 		middlewares.RecoverMiddleware,
 		// nice log with metrics
 		middlewares.NewLoggingMiddleware(name),
+		// allow cors origin
+		middlewares.NewCorsMiddleware(corsOrigin),
 	)
 
 	router.Handle("/status", useMiddleware(svc.StatusHandler))
