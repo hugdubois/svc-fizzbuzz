@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers/hits"
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 	"github.com/hugdubois/svc-fizzbuzz/service/middlewares"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -49,6 +51,9 @@ func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	router.Handle("/version", useMiddleware(svc.VersionHandler))
 
 	// service api endpoints
+	router.Handle("/api/v1/fizzbuzz", useMiddleware(handlers.FizzBuzzHandler))
+	router.Handle("/api/v1/fizzbuzz/top", useMiddleware(handlers.FizzBuzzTopHandler))
+	router.Handle("/api/v1/hits", useMiddleware(hits.Handler))
 
 	// prometheus metrics handler
 	router.Handle("/metrics", promhttp.Handler())
