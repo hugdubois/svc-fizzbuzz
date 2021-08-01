@@ -28,7 +28,7 @@ test-cover-report:
 
 serve: build
 	@echo "$(NAME): serve task"
-	@_build/svc-fizzbuzz serve
+	@_build/svc-fizzbuzz serve -d
 
 clean:
 	@echo "$(NAME): clean task"
