@@ -23,7 +23,7 @@ todo
 ## GOAL / ROADMAP
 
 - [x] separate core domain (without dependencies)
-- [ ] not to much dependencies
+- [ ] not too much dependencies
 - [x] nice cli with usage and help
 - [x] light simple http service (with gracefull shutdown and errors recovering)
 - [ ] allows CORS
