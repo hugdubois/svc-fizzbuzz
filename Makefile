@@ -17,13 +17,17 @@ test:
 	@go test ./... -v -race
 
 test-cover:
-	@echo "$(NAME): test task"
+	@echo "$(NAME): test-cover task"
 	@go test ./... -cover
 
-test-cover-html:
-	@echo "$(NAME): test task"
+test-cover-report:
+	@echo "$(NAME): test-cover-report task"
 	@go test ./... -coverprofile=_build/coverage.out
 	@go tool cover -html=_build/coverage.out
+
+serve: build
+	@echo "$(NAME): serve task"
+	@_build/svc-fizzbuzz serve
 
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \
