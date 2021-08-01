@@ -5,8 +5,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 )
 
@@ -27,8 +29,13 @@ func Test_StatusHandler(t *testing.T) {
 	ts := httptest.NewServer(svc.NewRouter())
 	defer ts.Close()
 
+	var resp *http.Response
+
 	req, _ := http.NewRequest("GET", ts.URL+"/status", nil)
-	resp, _ := http.DefaultClient.Do(req)
+
+	outputLog := helpers.CaptureOutput(func() {
+		resp, _ = http.DefaultClient.Do(req)
+	})
 
 	if got, want := resp.StatusCode, 200; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
@@ -45,6 +52,11 @@ func Test_StatusHandler(t *testing.T) {
 	if got, want := statusMsg.Alive, true; got != want {
 		t.Fatalf("Wrong version return, got %t but want %t", got, want)
 	}
+
+	matched, err := regexp.MatchString(`uri=/status `, outputLog)
+	if matched != true || err != nil {
+		t.Fatalf("request is not logged :\n%s", outputLog)
+	}
 }
 
 func Test_VersionHandler(t *testing.T) {
@@ -52,8 +64,13 @@ func Test_VersionHandler(t *testing.T) {
 	ts := httptest.NewServer(svc.NewRouter())
 	defer ts.Close()
 
+	var resp *http.Response
+
 	req, _ := http.NewRequest("GET", ts.URL+"/version", nil)
-	resp, _ := http.DefaultClient.Do(req)
+
+	outputLog := helpers.CaptureOutput(func() {
+		resp, _ = http.DefaultClient.Do(req)
+	})
 
 	if got, want := resp.StatusCode, 200; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
@@ -72,6 +89,11 @@ func Test_VersionHandler(t *testing.T) {
 	}
 	if got, want := versionMsg.Name, svc.Name; got != want {
 		t.Fatalf("Wrong version return, got %s but want %s", got, want)
+	}
+
+	matched, err := regexp.MatchString(`uri=/version `, outputLog)
+	if matched != true || err != nil {
+		t.Fatalf("request is not logged :\n%s", outputLog)
 	}
 }
 
@@ -82,8 +104,14 @@ func Test_Index(t *testing.T) {
 	ts := httptest.NewServer(svc.NewRouter())
 	defer ts.Close()
 
+	var resp *http.Response
+
 	req, _ := http.NewRequest("GET", ts.URL+"/", nil)
-	resp, _ := http.DefaultClient.Do(req)
+
+	outputLog := helpers.CaptureOutput(func() {
+		resp, _ = http.DefaultClient.Do(req)
+	})
+
 	if got, want := resp.StatusCode, 200; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
@@ -103,6 +131,11 @@ func Test_Index(t *testing.T) {
 	if got, want := versionMsg.Name, svc.Name; got != want {
 		t.Fatalf("Wrong version return, got %s but want %s", got, want)
 	}
+
+	matched, err := regexp.MatchString(`uri=/ `, outputLog)
+	if matched != true || err != nil {
+		t.Fatalf("request is not logged :\n%s", outputLog)
+	}
 }
 
 func Test_NotFound(t *testing.T) {
@@ -112,8 +145,14 @@ func Test_NotFound(t *testing.T) {
 	ts := httptest.NewServer(svc.NewRouter())
 	defer ts.Close()
 
+	var resp *http.Response
+
 	req, _ := http.NewRequest("GET", ts.URL+"/not_found", nil)
-	resp, _ := http.DefaultClient.Do(req)
+
+	outputLog := helpers.CaptureOutput(func() {
+		resp, _ = http.DefaultClient.Do(req)
+	})
+
 	if got, want := resp.StatusCode, 404; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
@@ -131,5 +170,10 @@ func Test_NotFound(t *testing.T) {
 	}
 	if got, want := notFoundMsg.Message, "Not Found"; got != want {
 		t.Fatalf("Wrong message return, got %s but want %s", got, want)
+	}
+
+	matched, err := regexp.MatchString(`uri=/not_found `, outputLog)
+	if matched != true || err != nil {
+		t.Fatalf("request is not logged :\n%s", outputLog)
 	}
 }

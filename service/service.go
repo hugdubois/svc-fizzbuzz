@@ -35,6 +35,8 @@ func (svc Service) NewRouter() *http.ServeMux {
 	useMiddleware := middlewares.UseMiddleware(
 		// panic recover
 		middlewares.RecoverMiddleware,
+		// nice log with metrics
+		middlewares.NewLoggingMiddleware(name),
 	)
 
 	router.Handle("/status", useMiddleware(svc.StatusHandler))

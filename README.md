@@ -26,8 +26,8 @@ todo
 - [ ] not too much dependencies
 - [x] nice cli with usage and help
 - [x] light simple http service (with gracefull shutdown and errors recovering)
+- [x] nice requests log
 - [ ] allows CORS
-- [ ] nice request log
 - [ ] endpoint to expose prometheus metrics
 - [ ] test coverage >~ 80% (core 100%)
 - [ ] good documentation
