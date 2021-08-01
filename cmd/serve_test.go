@@ -4,8 +4,9 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/hugdubois/svc-fizzbuzz/helpers"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
 func Test_ServeCmd(t *testing.T) {
@@ -18,10 +19,10 @@ func Test_ServeCmd(t *testing.T) {
 	if debugMode == false {
 		debugMode = true
 	}
-	initLogger()
 
 	out := helpers.CaptureOutput(func() {
-		log.Debug("must appear in log")
+		initLogger()
+		log.Print("must appear in log")
 	})
 
 	matched, err := regexp.MatchString(`must appear in log`, out)
