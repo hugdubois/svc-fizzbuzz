@@ -22,12 +22,20 @@ test-cover:
 
 test-cover-report:
 	@echo "$(NAME): test-cover-report task"
+	@mkdir -p _build
 	@go test ./... -coverprofile=_build/coverage.out
 	@go tool cover -html=_build/coverage.out
 
 serve: build
 	@echo "$(NAME): serve task"
 	@_build/svc-fizzbuzz serve
+
+clean:
+	@echo "$(NAME): clean task"
+	@touch svc-fizzbuzz
+	@-rm svc-fizzbuzz
+	@mkdir -p _build
+	@-rm -rf _build
 
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \
