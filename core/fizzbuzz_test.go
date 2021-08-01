@@ -34,7 +34,7 @@ func assertValidFizzBuzz(t *testing.T, params FizzBuzzParams, expected []string)
 }
 
 // TestValidFizzBuzzParams is a function to test the FizzBuzz function with some valid parameters
-func TestValidFizzBuzzParams(t *testing.T) {
+func Test_ValidFizzBuzzParams(t *testing.T) {
 	//default params
 	assertValidFizzBuzz(
 		t,
@@ -67,7 +67,7 @@ func TestValidFizzBuzzParams(t *testing.T) {
 }
 
 // TestInvalidFizzBuzzParams is a function to test the FizzBuzz function with some invalid parameters
-func TestInvalidFizzBuzzParams(t *testing.T) {
+func Test_InvalidFizzBuzzParams(t *testing.T) {
 	assertInvalidFizzBuzz(
 		t,
 		FizzBuzzParams{Limit: 0, Int1: 7, Str1: "bon", Int2: 9, Str2: "coin"},

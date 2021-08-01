@@ -10,7 +10,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 )
 
-func TestNewService(t *testing.T) {
+func Test_NewService(t *testing.T) {
 	svc := NewService()
 	if got, want := svc.Name, name; got != want {
 		t.Fatalf("Bad service name, got %s but want %s", got, want)
@@ -20,7 +20,7 @@ func TestNewService(t *testing.T) {
 	}
 }
 
-func TestStatusHandler(t *testing.T) {
+func Test_StatusHandler(t *testing.T) {
 	var statusMsg StatusResponse
 
 	svc := NewService()
@@ -47,7 +47,7 @@ func TestStatusHandler(t *testing.T) {
 	}
 }
 
-func TestVersionHandler(t *testing.T) {
+func Test_VersionHandler(t *testing.T) {
 	svc := NewService()
 	ts := httptest.NewServer(svc.NewRouter())
 	defer ts.Close()
@@ -75,7 +75,7 @@ func TestVersionHandler(t *testing.T) {
 	}
 }
 
-func TestIndex(t *testing.T) {
+func Test_Index(t *testing.T) {
 	var versionMsg Service
 
 	svc := NewService()
@@ -105,7 +105,7 @@ func TestIndex(t *testing.T) {
 	}
 }
 
-func TestNotFound(t *testing.T) {
+func Test_NotFound(t *testing.T) {
 	var notFoundMsg handlers.ErrorMessage
 
 	svc := NewService()

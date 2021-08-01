@@ -4,10 +4,11 @@ import (
 	"regexp"
 	"testing"
 
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 	log "github.com/sirupsen/logrus"
 )
 
-func TestServeCmd(t *testing.T) {
+func Test_ServeCmd(t *testing.T) {
 	srv := getServer()
 	if got, want := srv.Addr, defautAddress; got != want {
 		t.Fatalf("Server addres flag error, got %s but want %s", got, want)
@@ -18,7 +19,8 @@ func TestServeCmd(t *testing.T) {
 		debugMode = true
 	}
 	initLogger()
-	out := captureOutput(func() {
+
+	out := helpers.CaptureOutput(func() {
 		log.Debug("must appear in log")
 	})
 

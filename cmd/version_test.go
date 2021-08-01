@@ -2,10 +2,12 @@ package cmd
 
 import (
 	"testing"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
-func TestVersionCmd(t *testing.T) {
-	out := captureOutput(func() {
+func Test_VersionCmd(t *testing.T) {
+	out := helpers.CaptureOutput(func() {
 		rootCmd.SetArgs([]string{"version"})
 		rootCmd.Execute()
 	})
