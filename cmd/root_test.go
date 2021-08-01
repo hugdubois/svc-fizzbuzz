@@ -8,6 +8,8 @@ import (
 	"regexp"
 	"sync"
 	"testing"
+
+	"github.com/sirupsen/logrus"
 )
 
 func captureOutput(f func()) string {
@@ -25,6 +27,7 @@ func captureOutput(f func()) string {
 	os.Stdout = writer
 	os.Stderr = writer
 	log.SetOutput(writer)
+	logrus.SetOutput(writer)
 	out := make(chan string)
 	wg := new(sync.WaitGroup)
 	wg.Add(1)

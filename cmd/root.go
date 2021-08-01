@@ -10,6 +10,8 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/service"
 )
 
+const defautAddress = ":13000"
+
 var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
@@ -20,13 +22,14 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "svc-fizzbuzz",
 		Short: "A simple fizzbuzz microservice",
-		Long: `To get started run the serve subcommand which will start a server:
+		Long: fmt.Sprintf(`To get started run the serve subcommand which will start a server:
 
   $ svc-fizzbuzz serve
 
 curl examples:
-  $ curl -X GET    http://localhost:13000/
-  $ curl -X GET    http://localhost:13000/version`,
+  $ curl -X GET    http://localhost%[1]s/
+  $ curl -X GET    http://localhost%[1]s/version
+  $ curl -X GET    http://localhost%[1]s/status`, defautAddress),
 	}
 )
 
