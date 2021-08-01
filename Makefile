@@ -1,7 +1,13 @@
 NAME = svc-fizzbuzz
 VERSION = $(shell cat VERSION)
+
 GO_PACKAGE_BASE = github.com/hugdubois
 GO_PACKAGE_NAME = $(GO_PACKAGE_BASE)/$(NAME)
+
+DOCKER_TAG = $(shell cat VERSION | tr +- __)
+DOCKER_IMAGE_NAME = hugdubois/$(NAME)
+DOCKER_REGISTRY?=docker.io
+DOCKER_RUN_PORT?=8080
 
 build:
 	@echo "$(NAME): build task"
@@ -43,6 +49,19 @@ clean:
 	@-rm svc-fizzbuzz
 	@mkdir -p _build
 	@-rm -rf _build
+
+docker:
+	@echo "$(NAME): docker task"
+	@docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
+
+docker-push: docker
+	@echo "$(NAME): docker-push task"
+	@docker tag $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	@docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+
+docker-run: docker
+	@echo "$(NAME): docker-push task"
+	@docker run -p $(DOCKER_RUN_PORT):13000 -it $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
 
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \
