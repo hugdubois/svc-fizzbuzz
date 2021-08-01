@@ -7,6 +7,7 @@ import (
 
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 	"github.com/hugdubois/svc-fizzbuzz/service/middlewares"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -35,14 +36,22 @@ func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	useMiddleware := middlewares.UseMiddleware(
 		// panic recover
 		middlewares.RecoverMiddleware,
+		// prometheus instrument handler it's must be at the top of middleware chain
+		middlewares.PrometheusMiddleware,
 		// nice log with metrics
 		middlewares.NewLoggingMiddleware(name),
 		// allow cors origin
 		middlewares.NewCorsMiddleware(corsOrigin),
 	)
 
+	// basic endpoints
 	router.Handle("/status", useMiddleware(svc.StatusHandler))
 	router.Handle("/version", useMiddleware(svc.VersionHandler))
+
+	// service api endpoints
+
+	// prometheus metrics handler
+	router.Handle("/metrics", promhttp.Handler())
 
 	// welcome msg on / else return a 404
 	router.Handle("/", useMiddleware(func(w http.ResponseWriter, r *http.Request) {
