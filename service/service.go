@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
+	"github.com/hugdubois/svc-fizzbuzz/service/middlewares"
 )
 
 var (
@@ -31,18 +32,23 @@ func NewService() *Service {
 func (svc Service) NewRouter() *http.ServeMux {
 	router := http.NewServeMux()
 
-	router.HandleFunc("/status", svc.StatusHandler)
-	router.HandleFunc("/version", svc.VersionHandler)
+	useMiddleware := middlewares.UseMiddleware(
+		// panic recover
+		middlewares.RecoverMiddleware,
+	)
+
+	router.Handle("/status", useMiddleware(svc.StatusHandler))
+	router.Handle("/version", useMiddleware(svc.VersionHandler))
 
 	// welcome msg on / else return a 404
-	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	router.Handle("/", useMiddleware(func(w http.ResponseWriter, r *http.Request) {
 		// The "/" pattern matches everything not matched by previous handlers
 		if r.URL.Path != "/" {
 			handlers.ErrorHandler(w, r, http.StatusNotFound, "Not Found")
 			return
 		}
 		svc.VersionHandler(w, r)
-	})
+	}))
 
 	return router
 }
