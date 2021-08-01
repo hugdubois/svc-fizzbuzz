@@ -53,5 +53,6 @@ data/certs
 _tools/protoc
 
 # local build
+_build/
 svc-fizzbuzz
 coverage.out

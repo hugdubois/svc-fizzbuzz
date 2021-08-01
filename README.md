@@ -22,7 +22,7 @@ todo
 
 ## GOAL / ROADMAP
 
-[ ] separate core domain (without dependencies)
+[x] separate core domain (without dependencies)
 [ ] not to much dependencies
 [ ] nice cli with usage and help
 [ ] light simple http service (with gracefull shutdown and errors recovering)
