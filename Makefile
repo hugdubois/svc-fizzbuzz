@@ -56,7 +56,7 @@ docker-tag:
 	@echo "$(NAME): docker-tag task"
 	@echo "TAG=$(DOCKER_TAG)" > .env
 
-docker: docker-tag
+docker: test docker-tag
 	@echo "$(NAME): docker task"
 	@docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
 
