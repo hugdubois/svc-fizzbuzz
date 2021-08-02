@@ -11,6 +11,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+
+	"github.com/hugdubois/svc-fizzbuzz/store"
 )
 
 // serveCmd represents the serve command
@@ -21,6 +23,7 @@ var (
 	readTimeout        time.Duration
 	writeTimeout       time.Duration
 	corsAllowedOrigins string
+	databaseConnect    string
 
 	serveCmd = &cobra.Command{
 		Use:   "serve",
@@ -99,6 +102,15 @@ func init() {
 		"Cross Origin Resource Sharing AllowedOrigins (string) separed by | ex: http://*domain1.com|http://*domain2.com",
 	)
 
+	// databaseConnect
+	serveCmd.PersistentFlags().StringVarP(
+		&databaseConnect,
+		"database-connect",
+		"",
+		store.DefaultDatabaseConnect,
+		"Redis connection informations ([[db:]password@]host:port)",
+	)
+
 	// Here you will define your flags and configuration settings.
 }
 
@@ -110,9 +122,12 @@ func serve() {
 		"address":            serverAddress,
 		"shutdownTimeout":    shutdownTimeout,
 		"corsAllowedOrigins": corsAllowedOrigins,
+		"databaseConnect":    databaseConnect,
 	}).Debug("Flags")
 
-	// Got service router and launch a gracefull shutdown server
+	initStore()
+
+	// Got service router and launch a graceful shutdown server
 	srv := getServer()
 	go launchServer(srv)
 	waitForShutdown(srv)
@@ -128,6 +143,18 @@ func initLogger() {
 			"FullName": fmt.Sprintf("%s-%s", svc.Name, svc.Version),
 		}).Debug("set log debug level")
 	}
+}
+
+func initStore() {
+	// initialize data store
+	store.Setup(context.Background(), databaseConnect)
+
+	pong, err := store.BlockedPingBakkoff()
+	if err != nil {
+		log.Fatalln("store ping error:", err)
+	}
+
+	log.Infof("store ping: %s", pong)
 }
 
 // Got service router and return a http server

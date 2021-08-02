@@ -8,16 +8,13 @@ import (
 	"strconv"
 
 	"github.com/hugdubois/svc-fizzbuzz/core"
-	"github.com/hugdubois/svc-fizzbuzz/helpers/hits"
+	"github.com/hugdubois/svc-fizzbuzz/store"
 )
 
-var (
-	// fizzbuzzHits store the fizzbuzz hits
-	fizzbuzzHits *hits.Hits
-)
+var fizzbuzzHits store.Hitable
 
 func init() {
-	fizzbuzzHits = hits.NewHits("fizzbuzz")
+	fizzbuzzHits = store.NewHits("fizzbuzz")
 }
 
 // parseIntValue parse an expected int parameter
@@ -95,7 +92,11 @@ func fizzbuzzHit(params core.FizzBuzzParams) {
 
 // fizzbuzzTopHit retreives the top fizzbuzz hits
 func fizzbuzzTopHit() (*core.FizzBuzzParams, int64, error) {
-	top, count := fizzbuzzHits.Top()
+	top, count, err := fizzbuzzHits.Top()
+	if err != nil {
+		return nil, 0, err
+	}
+
 	req, err := http.NewRequest("GET", "?"+top, nil)
 	if err != nil {
 		return nil, 0, err

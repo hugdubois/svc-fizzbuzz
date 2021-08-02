@@ -6,15 +6,19 @@ import (
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	log "github.com/sirupsen/logrus"
 
-	"github.com/hugdubois/svc-fizzbuzz/helpers/hits"
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 	"github.com/hugdubois/svc-fizzbuzz/service/middlewares"
+	"github.com/hugdubois/svc-fizzbuzz/store"
 )
 
 var (
 	name    = "svc-fizzbuzz"
 	version = "latest" // injected with -ldflags in Makefile
+
+	// this is useful for the testing
+	pingStore = store.Ping
 )
 
 // Service is the fizzbuzz service
@@ -53,7 +57,6 @@ func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	// service api endpoints
 	router.Handle("/api/v1/fizzbuzz", useMiddlewares(handlers.FizzBuzzHandler))
 	router.Handle("/api/v1/fizzbuzz/top", useMiddlewares(handlers.FizzBuzzTopHandler))
-	router.Handle("/api/v1/hits", useMiddlewares(hits.Handler))
 
 	// prometheus metrics handler
 	router.Handle("/metrics", promhttp.Handler())
@@ -75,13 +78,20 @@ func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 
 // StatusResponse is the message returned by Status handler
 type StatusResponse struct {
-	Alive bool `json:"alive"`
+	SvcAlive   bool `json:"svc-alive"`
+	StoreAlive bool `json:"store-alive"`
 }
 
 // StatusHandler is a http handler which returns the service status
 func (svc Service) StatusHandler(w http.ResponseWriter, r *http.Request) {
+	pong, err := pingStore()
+	if err != nil {
+		log.Errorf("store ping failure - %s", err.Error())
+	}
+
 	msg := StatusResponse{
-		Alive: true,
+		SvcAlive:   true,
+		StoreAlive: pong == "PONG",
 	}
 
 	output, err := json.Marshal(msg)

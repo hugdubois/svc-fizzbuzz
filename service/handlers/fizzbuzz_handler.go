@@ -17,13 +17,13 @@ func FizzBuzzHandler(w http.ResponseWriter, r *http.Request) {
 	params, err := parseFizzbuzzParams(r)
 
 	if err != nil {
-		ErrorHandler(w, r, http.StatusBadRequest, err.Error())
+		ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
 	fizzbuzz, err := core.FizzBuzz(*params)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusBadRequest, err.Error())
+		ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
