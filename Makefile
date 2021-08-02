@@ -82,6 +82,19 @@ compose-down:
 	@echo "$(NAME): compose-down task"
 	@docker-compose down
 
+k8s-deploy:
+	@echo "$(NAME): k8s-deploy task"
+	@kubectl apply -f k8s-deployment.yaml
+	@echo ''
+	@echo 'Note (on a local environment) do :'
+	@echo ''
+	@echo '    minikube service svc-fizzbuzz'
+	@echo ''
+
+k8s-delete:
+	@echo "$(NAME): k8s-delete task"
+	@kubectl delete -f k8s-deployment.yaml
+
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \
 		go get $(GO_PACKAGE_NAME)@v$(VERSION)
