@@ -26,7 +26,7 @@ func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
 	req, _ := http.NewRequest("GET", ts.URL+url, nil)
 	resp, _ := http.DefaultClient.Do(req)
 
-	if got, want := resp.StatusCode, 200; got != want {
+	if got, want := resp.StatusCode, http.StatusOK; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
 	data, err := ioutil.ReadAll(resp.Body)
@@ -54,7 +54,7 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	req, _ := http.NewRequest("GET", ts.URL+url, nil)
 	resp, _ := http.DefaultClient.Do(req)
 
-	if got, want := resp.StatusCode, http.StatusBadRequest; got != want {
+	if got, want := resp.StatusCode, http.StatusUnprocessableEntity; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
 	data, err := ioutil.ReadAll(resp.Body)
@@ -181,7 +181,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?limit=INVALID&int1=2&int2=3",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'limit' must be a positive number - got (INVALID)",
 		},
 	)
@@ -189,7 +189,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int1=INVALID&int2=3",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'int1' must be a positive number - got (INVALID)",
 		},
 	)
@@ -198,7 +198,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int2=INVALID",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'int2' must be a positive number - got (INVALID)",
 		},
 	)
@@ -207,7 +207,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int2=-1",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: multiple must be a positive number - got (int2: -1)",
 		},
 	)
