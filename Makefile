@@ -49,6 +49,8 @@ clean:
 	@-rm svc-fizzbuzz
 	@mkdir -p _build
 	@-rm -rf _build
+	@touch .env
+	@-rm .env
 
 docker:
 	@echo "$(NAME): docker task"
