@@ -15,7 +15,7 @@ spec:
     spec:                        # Spec for the container which will run in the Pod
       containers:
       - name: svc-fizzbuzz
-        image: hugdubois/svc-fizzbuzz:0.0.3_dev
+        image: hugdubois/svc-fizzbuzz:0.0.3
         imagePullPolicy: Always
         ports:
           - containerPort: 8080  # Should match the port number that the Go application listens on
