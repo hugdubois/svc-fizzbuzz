@@ -50,5 +50,8 @@ todo
 - [ ] good documentation
 - [ ] (bonus) add a cache
 - [x] docker / docker-compose
-- [ ] simple k8s service
+- [x] simple k8s deployment
+    - [ ] use kustomize to bump TAG in k8s-deployment.yaml
 - [ ] (extra bonus) exposes an openapi / swagger file
+- [ ] (extra bonus) CI
+- [ ] (fix) no middleware on health check and readiness endpoints
