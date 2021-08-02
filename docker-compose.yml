@@ -18,7 +18,7 @@ services:
     image: hugdubois/svc-fizzbuzz:${TAG}
     command: serve
     ports:
-      - 8383:13000
+      - 8080:8080
     networks:
       - monitoring-back
       - http

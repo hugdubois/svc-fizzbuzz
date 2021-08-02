@@ -12,6 +12,6 @@ FROM scratch
 LABEL maintainer="Hugues Dubois <hugdubois@gmail.com>"
 #COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=builder /go/src/github.com/hugdubois/svc-fizzbuzz/_build/svc-fizzbuzz /svc-fizzbuzz
-EXPOSE 13000
+EXPOSE 8080
 ENTRYPOINT ["/svc-fizzbuzz"]
 CMD ["serve"]

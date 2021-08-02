@@ -17,4 +17,4 @@ scrape_configs:
     metrics_path: '/metrics'
     static_configs:
       - targets:
-        - "svc-fizzbuzz:13000"
+        - "svc-fizzbuzz:8080"

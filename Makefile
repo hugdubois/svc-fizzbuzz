@@ -52,9 +52,12 @@ clean:
 	@touch .env
 	@-rm .env
 
-docker:
-	@echo "$(NAME): docker task"
+docker-tag:
+	@echo "$(NAME): docker-tag task"
 	@echo "TAG=$(DOCKER_TAG)" > .env
+
+docker: docker-tag
+	@echo "$(NAME): docker task"
 	@docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
 
 docker-push: docker
@@ -64,12 +67,20 @@ docker-push: docker
 
 docker-run: docker
 	@echo "$(NAME): docker-run task"
-	@docker run -d --name=svc-fizzbuzz -p $(DOCKER_RUN_PORT):13000 -it $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	@docker run -d --name=svc-fizzbuzz -p $(DOCKER_RUN_PORT):8080 -it $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
 
 docker-rm:
 	@echo "$(NAME): docker-rm task"
 	-docker stop svc-fizzbuzz
 	-docker rm svc-fizzbuzz
+
+compose-up: docker-tag
+	@echo "$(NAME): compose-up task"
+	@docker-compose up -d
+
+compose-down:
+	@echo "$(NAME): compose-down task"
+	@docker-compose down
 
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \
