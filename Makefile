@@ -82,6 +82,10 @@ compose-down:
 	@echo "$(NAME): compose-down task"
 	@docker-compose down
 
+compose-ps:
+	@echo "$(NAME): compose-down task"
+	@docker-compose ps
+
 k8s-deploy:
 	@echo "$(NAME): k8s-deploy task"
 	@kubectl apply -f k8s-deployment.yaml
