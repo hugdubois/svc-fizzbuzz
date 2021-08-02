@@ -3,9 +3,13 @@ version: "3"
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  redis-data: {}
+  redis-conf: {}
 
 networks:
   http:
+    driver: bridge
+  data:
     driver: bridge
   monitoring-front:
     driver: bridge
@@ -16,12 +20,25 @@ services:
   svc-fizzbuzz:
     build: ./
     image: hugdubois/svc-fizzbuzz:${TAG}
-    command: serve
+    command: serve --database-connect "0:${REDIS_PASS:-password123}@redis:6379"
     ports:
       - 8080:8080
     networks:
       - monitoring-back
       - http
+      - data
+
+  redis:
+    image: redis:alpine
+    # container_name: svc-fizzbuzz-redis
+    command: redis-server --requirepass ${REDIS_PASS:-password123}
+    expose:
+     - "6379"
+    volumes:
+      - redis-data:/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - data
 
   prometheus:
     image: prom/prometheus:v2.28.1
