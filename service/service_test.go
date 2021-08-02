@@ -106,7 +106,7 @@ func Test_VersionHandler(t *testing.T) {
 	}
 }
 
-func Test_Index(t *testing.T) {
+func Test_IndexHandler(t *testing.T) {
 	var versionMsg Service
 
 	svc := NewService()

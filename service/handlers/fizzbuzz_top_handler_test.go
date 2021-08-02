@@ -63,7 +63,7 @@ func Test_FizzbuzzTopHandler(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Got an error when reading body: %s", err.Error())
 	}
-	t.Logf("%s", string(data[:]))
+
 	err = json.Unmarshal(data, &fizzbuzzTopMsg)
 	if err != nil {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())

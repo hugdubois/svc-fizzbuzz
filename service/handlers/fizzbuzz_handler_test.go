@@ -72,7 +72,8 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	}
 }
 
-func TestFizzBuzzWithoutParams(t *testing.T) {
+// Test_FizzBuzzHandler test FizzBuzzHandler
+func Test_FizzBuzzHandler(t *testing.T) {
 	http.HandleFunc("/fizzbuzz", FizzBuzzHandler)
 
 	assertValidFizzBuzz(
