@@ -84,4 +84,6 @@ func Test_redis(t *testing.T) {
 
 	mock.ExpectDel("myhits").SetVal(1)
 	myHits.Reset()
+
+	mock.ClearExpect()
 }

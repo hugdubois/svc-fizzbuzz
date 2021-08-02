@@ -92,7 +92,7 @@ func Setup(cx context.Context, c string) error {
 	return nil
 }
 
-// Ping the database
+// BlockedPingBakkoff ping redis with backoff retry if redis is not reachabe
 func BlockedPingBakkoff() (pong string, err error) {
 	// Back off exponentially, starting at 3 milliseconds, capping at 320 seconds
 	exp := backoff.NewExponentialFullJitter(3*time.Millisecond, 320*time.Second)
@@ -108,6 +108,7 @@ func BlockedPingBakkoff() (pong string, err error) {
 	}
 }
 
+// Ping redis server
 func Ping() (string, error) {
 	pong := rdb.Ping(ctx).Val()
 

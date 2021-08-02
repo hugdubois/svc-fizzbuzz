@@ -12,6 +12,12 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 )
 
+func init() {
+	pingStore = func() (string, error) {
+		return "PONG", nil
+	}
+}
+
 func Test_NewService(t *testing.T) {
 	svc := NewService()
 	if got, want := svc.Name, name; got != want {
@@ -49,8 +55,11 @@ func Test_StatusHandler(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())
 	}
-	if got, want := statusMsg.Alive, true; got != want {
-		t.Fatalf("Wrong version return, got %t but want %t", got, want)
+	if got, want := statusMsg.SvcAlive, true; got != want {
+		t.Fatalf("Wrong status, service must be alive, got %t but want %t", got, want)
+	}
+	if got, want := statusMsg.StoreAlive, true; got != want {
+		t.Fatalf("Wrong status, store must be reachable, got %t but want %t", got, want)
 	}
 
 	matched, err := regexp.MatchString(`uri=/status `, outputLog)
