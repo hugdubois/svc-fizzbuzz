@@ -16,7 +16,7 @@ func Test_LoggingMiddleware(t *testing.T) {
 		fmt.Fprint(w, "response body")
 	})
 
-	ts := httptest.NewServer(NewLoggingMiddleware("svc-fizzbuzz")(http.DefaultServeMux))
+	ts := httptest.NewServer(NewLogging("svc-fizzbuzz")(http.DefaultServeMux))
 	defer ts.Close()
 
 	var resp *http.Response

@@ -32,21 +32,25 @@ var (
 	)
 )
 
-// PrometheusMiddleware is a middleware to keep prometheus metrics
-func PrometheusMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		inFlightGauge.WithLabelValues(r.Method, r.URL.Path).Inc()
-		metrics := httpsnoop.CaptureMetrics(next, w, r)
-
-		requestCounter.WithLabelValues(http.StatusText(metrics.Code), r.Method, r.URL.Path).Inc()
-
-		inFlightGauge.WithLabelValues(r.Method, r.URL.Path).Dec()
-		latencyHistogram.WithLabelValues(http.StatusText(metrics.Code), r.Method, r.URL.Path).Observe(float64(metrics.Duration / time.Millisecond))
-	})
-}
-
 func init() {
 	prometheus.MustRegister(requestCounter)
 	prometheus.MustRegister(latencyHistogram)
 	prometheus.MustRegister(inFlightGauge)
+}
+
+// NewMetrics return a new metrics middleware here prometheus
+func NewMetrics() Middleware {
+	return func(next http.Handler) http.Handler {
+		fn := func(w http.ResponseWriter, r *http.Request) {
+			inFlightGauge.WithLabelValues(r.Method, r.URL.Path).Inc()
+			metrics := httpsnoop.CaptureMetrics(next, w, r)
+
+			requestCounter.WithLabelValues(http.StatusText(metrics.Code), r.Method, r.URL.Path).Inc()
+
+			inFlightGauge.WithLabelValues(r.Method, r.URL.Path).Dec()
+			latencyHistogram.WithLabelValues(http.StatusText(metrics.Code), r.Method, r.URL.Path).Observe(float64(metrics.Duration / time.Millisecond))
+		}
+
+		return http.HandlerFunc(fn)
+	}
 }

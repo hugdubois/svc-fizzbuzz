@@ -15,7 +15,7 @@ func assertRecover(t *testing.T, url string, fn http.HandlerFunc) {
 
 	http.HandleFunc(url, fn)
 
-	ts := httptest.NewServer(RecoverMiddleware(http.DefaultServeMux))
+	ts := httptest.NewServer(NewRecover()(http.DefaultServeMux))
 	defer ts.Close()
 
 	var resp *http.Response
