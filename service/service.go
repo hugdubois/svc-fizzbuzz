@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers/hits"
 	"github.com/hugdubois/svc-fizzbuzz/service/handlers"
 	"github.com/hugdubois/svc-fizzbuzz/service/middlewares"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 var (
@@ -33,28 +35,31 @@ func NewService() *Service {
 func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	router := http.NewServeMux()
 
-	useMiddleware := middlewares.UseMiddleware(
+	useMiddlewares := middlewares.UseMiddleware(
 		// panic recover
-		middlewares.RecoverMiddleware,
+		middlewares.NewRecover(),
 		// prometheus instrument handler it's must be at the top of middleware chain
-		middlewares.PrometheusMiddleware,
+		middlewares.NewMetrics(),
 		// nice log with metrics
-		middlewares.NewLoggingMiddleware(name),
+		middlewares.NewLogging(name),
 		// allow cors origin
-		middlewares.NewCorsMiddleware(corsOrigin),
+		middlewares.NewCors(corsOrigin),
 	)
 
 	// basic endpoints
-	router.Handle("/status", useMiddleware(svc.StatusHandler))
-	router.Handle("/version", useMiddleware(svc.VersionHandler))
+	router.Handle("/status", useMiddlewares(svc.StatusHandler))
+	router.Handle("/version", useMiddlewares(svc.VersionHandler))
 
 	// service api endpoints
+	router.Handle("/api/v1/fizzbuzz", useMiddlewares(handlers.FizzBuzzHandler))
+	router.Handle("/api/v1/fizzbuzz/top", useMiddlewares(handlers.FizzBuzzTopHandler))
+	router.Handle("/api/v1/hits", useMiddlewares(hits.Handler))
 
 	// prometheus metrics handler
 	router.Handle("/metrics", promhttp.Handler())
 
 	// welcome msg on / else return a 404
-	router.Handle("/", useMiddleware(func(w http.ResponseWriter, r *http.Request) {
+	router.Handle("/", useMiddlewares(func(w http.ResponseWriter, r *http.Request) {
 		// The "/" pattern matches everything not matched by previous handlers
 		if r.URL.Path != "/" {
 			handlers.ErrorHandler(w, r, http.StatusNotFound, "Not Found")

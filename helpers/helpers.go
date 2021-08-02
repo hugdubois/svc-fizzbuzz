@@ -1,3 +1,4 @@
+// Package helpers provides some helpers functions.
 package helpers
 
 import (

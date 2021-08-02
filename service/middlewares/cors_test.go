@@ -10,7 +10,7 @@ import (
 func assertCorsMiddleware(t *testing.T, verb string) {
 	t.Helper()
 
-	ts := httptest.NewServer(NewCorsMiddleware("*")(http.DefaultServeMux))
+	ts := httptest.NewServer(NewCors("*")(http.DefaultServeMux))
 	defer ts.Close()
 
 	req, _ := http.NewRequest(verb, ts.URL+"/cors", nil)
@@ -32,7 +32,7 @@ func assertCorsMiddleware(t *testing.T, verb string) {
 func assertCorsMiddlewareEmpty(t *testing.T, verb string) {
 	t.Helper()
 
-	ts := httptest.NewServer(NewCorsMiddleware("")(http.DefaultServeMux))
+	ts := httptest.NewServer(NewCors("")(http.DefaultServeMux))
 	defer ts.Close()
 
 	req, _ := http.NewRequest(verb, ts.URL+"/cors-empty", nil)

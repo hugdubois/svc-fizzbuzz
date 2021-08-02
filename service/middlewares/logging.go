@@ -41,10 +41,10 @@ func loggingMiddlewareAfter(entry *log.Entry, metrics httpsnoop.Metrics, name st
 	})
 }
 
-// NewLoggingMiddleware return a new logging middleware
-func NewLoggingMiddleware(name string) Middleware {
+// NewLogging return a new logging middleware
+func NewLogging(name string) Middleware {
 	return func(next http.Handler) http.Handler {
-		loggingFn := func(w http.ResponseWriter, r *http.Request) {
+		fn := func(w http.ResponseWriter, r *http.Request) {
 			start := time.Now()
 			entry := log.NewEntry(log.StandardLogger())
 
@@ -54,6 +54,6 @@ func NewLoggingMiddleware(name string) Middleware {
 			loggingMiddlewareAfter(entry, metrics, name).Info("completed handling request")
 		}
 
-		return http.HandlerFunc(loggingFn)
+		return http.HandlerFunc(fn)
 	}
 }

@@ -1,7 +1,13 @@
 NAME = svc-fizzbuzz
 VERSION = $(shell cat VERSION)
+
 GO_PACKAGE_BASE = github.com/hugdubois
 GO_PACKAGE_NAME = $(GO_PACKAGE_BASE)/$(NAME)
+
+DOCKER_TAG = $(shell cat VERSION | tr +- __)
+DOCKER_IMAGE_NAME = hugdubois/$(NAME)
+DOCKER_REGISTRY?=docker.io
+DOCKER_RUN_PORT?=8080
 
 build:
 	@echo "$(NAME): build task"
@@ -20,11 +26,18 @@ test-cover:
 	@echo "$(NAME): test-cover task"
 	@go test ./... -cover
 
-test-cover-report:
-	@echo "$(NAME): test-cover-report task"
+test-cover-profile:
+	@echo "$(NAME): test-cover-profile task"
 	@mkdir -p _build
 	@go test ./... -coverprofile=_build/coverage.out
+
+test-cover-report: test-cover-profile
+	@echo "$(NAME): test-cover-report task"
 	@go tool cover -html=_build/coverage.out
+
+test-cover-func: test-cover-profile
+	@echo "$(NAME): test-cover-total task"
+	@go tool cover -func=_build/coverage.out
 
 serve: build
 	@echo "$(NAME): serve task"
@@ -36,6 +49,51 @@ clean:
 	@-rm svc-fizzbuzz
 	@mkdir -p _build
 	@-rm -rf _build
+	@touch .env
+	@-rm .env
+
+docker-tag:
+	@echo "$(NAME): docker-tag task"
+	@echo "TAG=$(DOCKER_TAG)" > .env
+
+docker: docker-tag
+	@echo "$(NAME): docker task"
+	@docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
+
+docker-push: docker
+	@echo "$(NAME): docker-push task"
+	@docker tag $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+	@docker push $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+
+docker-run: docker
+	@echo "$(NAME): docker-run task"
+	@docker run -d --name=svc-fizzbuzz -p $(DOCKER_RUN_PORT):8080 -it $(DOCKER_IMAGE_NAME):$(DOCKER_TAG)
+
+docker-rm:
+	@echo "$(NAME): docker-rm task"
+	-docker stop svc-fizzbuzz
+	-docker rm svc-fizzbuzz
+
+compose-up: docker-tag
+	@echo "$(NAME): compose-up task"
+	@docker-compose up -d
+
+compose-down:
+	@echo "$(NAME): compose-down task"
+	@docker-compose down
+
+k8s-deploy:
+	@echo "$(NAME): k8s-deploy task"
+	@kubectl apply -f k8s-deployment.yaml
+	@echo ''
+	@echo 'Note (on a local environment) do :'
+	@echo ''
+	@echo '    minikube service svc-fizzbuzz'
+	@echo ''
+
+k8s-delete:
+	@echo "$(NAME): k8s-delete task"
+	@kubectl delete -f k8s-deployment.yaml
 
 update-pkg-cache:
 	GOPROXY=https://proxy.golang.org GO111MODULE=on \

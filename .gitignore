@@ -53,6 +53,7 @@ data/certs
 _tools/protoc
 
 # local build
+.env
 _build/
 svc-fizzbuzz
 coverage.out

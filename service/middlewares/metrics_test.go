@@ -17,7 +17,7 @@ func TestMetricsMiddleware(t *testing.T) {
 	})
 	http.Handle("/metrics", promhttp.Handler())
 
-	ts := httptest.NewServer(PrometheusMiddleware(http.DefaultServeMux))
+	ts := httptest.NewServer(NewMetrics()(http.DefaultServeMux))
 	defer ts.Close()
 
 	// call metrics endpoint before /a-endpoint so it must not be found

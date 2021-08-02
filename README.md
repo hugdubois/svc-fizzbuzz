@@ -49,6 +49,9 @@ todo
 - [ ] test coverage >~ 80% (core 100%)
 - [ ] good documentation
 - [ ] (bonus) add a cache
-- [ ] docker / docker-compose
-- [ ] simple k8s service
+- [x] docker / docker-compose
+- [x] simple k8s deployment
+    - [ ] use kustomize to bump TAG in k8s-deployment.yaml
 - [ ] (extra bonus) exposes an openapi / swagger file
+- [ ] (extra bonus) CI
+- [ ] (fix) no middleware on health check and readiness endpoints

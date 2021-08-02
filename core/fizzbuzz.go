@@ -1,13 +1,4 @@
-// Package core provides the domain layer of svc-fizzbuzz
-//
-// The original fizz-buzz consists in writing all numbers from 1 to 100, and
-// just replacing all multiples of 3 by "fizz", all multiples of 5 by "buzz",
-// and all multiples of 15 by "fizzbuzz".
-// The output would look like this:
-//  "1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz,16,..."
-//
-// Here the limit (100) the multiples (3, 5), and the text (fizz, buzz) are
-// configurable via a struct.
+// Package core provides the domain layer.
 package core
 
 import (
@@ -15,8 +6,8 @@ import (
 	"strconv"
 )
 
-// FizzBuzzLimitMax is the maximum allowed limit value - here 100_000 is an arbitrary
-// value, this nust be depend of product owner.
+// FizzBuzzLimitMax is the maximum allowed limit value
+// here 100_000 is an arbitrary value, this nust be depend of product owner.
 const FizzBuzzLimitMax = 100_000
 
 // FizzBuzzParams is a struct with all the parameters to FizzBuzz function
