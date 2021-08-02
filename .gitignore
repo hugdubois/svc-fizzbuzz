@@ -57,3 +57,4 @@ _tools/protoc
 _build/
 svc-fizzbuzz
 coverage.out
+coverage.txt
