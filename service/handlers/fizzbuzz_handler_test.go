@@ -7,10 +7,17 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
+
+func init() {
+	fizzbuzzHits = helpers.NewMockHits("fizzbuzz")
+}
 
 // assertValidFizzBuzz is a helper function to test the valid parameters
 func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
+	var fizzbuzzMsg FizzBuzzResponse
 	t.Helper()
 
 	ts := httptest.NewServer(http.DefaultServeMux)
@@ -26,7 +33,7 @@ func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
 	if err != nil {
 		t.Fatalf("Got an error when reading body: %s", err.Error())
 	}
-	var fizzbuzzMsg FizzBuzzResponse
+
 	err = json.Unmarshal(data, &fizzbuzzMsg)
 	if err != nil {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())

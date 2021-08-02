@@ -6,11 +6,18 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
-func TestFizzbuzzTopHandler(t *testing.T) {
+func init() {
+	fizzbuzzHits = helpers.NewMockHits("fizzbuzz")
+}
+
+func Test_FizzbuzzTopHandler(t *testing.T) {
 	var fizzbuzzTopMsg FizzBuzzTopResponse
-	fizzbuzzHits.Init()
+	fizzbuzzHits.Reset()
+
 	http.HandleFunc("/fizzbuzz/top", FizzBuzzTopHandler)
 
 	ts := httptest.NewServer(http.DefaultServeMux)
@@ -62,10 +69,10 @@ func TestFizzbuzzTopHandler(t *testing.T) {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())
 	}
 	if got, want := fizzbuzzTopMsg.CountRequest, int64(1); got != want {
-		t.Fatalf("Wrong version return, got %d but want %d", got, want)
+		t.Fatalf("Wrong count request, got %d but want %d", got, want)
 	}
 	if got, want := fizzbuzzTopMsg.FizzBuzzParams.Str1, "ONE_CALL"; got != want {
-		t.Fatalf("Wrong version return, got %s but want %s", got, want)
+		t.Fatalf("Wrong str1 return, got %s but want %s", got, want)
 	}
 
 	// call a fizzbuzz with an identifiable string
