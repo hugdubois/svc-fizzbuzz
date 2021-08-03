@@ -51,7 +51,7 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
    - Returns the service status.
 
 - __/metrics__
-   - Returns the prometheus metrics.
+   - Returns the __prometheus__ metrics.
 
 - __/api/v1/fizzbuzz__
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
@@ -63,7 +63,7 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
        - `str2` (__string__) default value `buzz`
 
 - __/api/v1/fizzbuzz/top__
-   - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
+   - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of that endpoint. And returns the parameters corresponding to it.
 
 ## Technologies
 
@@ -80,26 +80,26 @@ To set the connection use `--database-connect` flag see [Usage](#usage) for more
 
 ### Baremetal
 
-Install localy (__baremetal__) (need a redis server) :
+Install localy (__baremetal__) (needs a redis server) :
 
     $ go get github.com/hugdubois/svc-fizzbuzz
 
 ### Docker
 
-Install via __Docker__ (need a redis server) :
+Install via __Docker__ (needs a redis server) :
 
     $ docker pull hugdubois/svc-fizzbuzz:0.0.6_dev
     $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.6_dev serve --database-connect localhost:6379
 
-__NOTE__ : the images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
+__NOTE__ : __docker__ images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 
 ### Docker compose
 
-Install via __docker-compose__ (without git clone) (need curl) :
+Install via __docker-compose__ (without git clone) (needs curl) :
 
     $ curl https://raw.githubusercontent.com/hugdubois/svc-fizzbuzz/master/hack/remote-docker-compose.sh | sh
 
-__NOTE__ : This scripts will create a __svc-fizzbuzz-compose__ with all required files
+__NOTE__ : that script will create a __svc-fizzbuzz-compose__ with all required files
 
 With `git clone` simply do :
 
@@ -116,15 +116,15 @@ Some services are exposed:
 
 ### Kubernetes
 
-Install via __kubernetes__ (need kubectl):
+Install via __kubernetes__ (needs kubectl):
 
     $ kubectl apply -f https://raw.githubusercontent.com/hugdubois/svc-fizzbuzz/master/k8s-deployment.yaml
 
-__NOTE__: if you use __minikube__ do `minikube service svc-fizzbuzz` to expose and get the servie ip.
+__NOTE__: if you use __minikube__ do `minikube service svc-fizzbuzz` to expose and get the service ip.
 
 ## Usage
 
-__svc-fizzbuzz__ is a simle fizzbuzz microservice.
+__svc-fizzbuzz__ is a sipmle fizzbuzz microservice.
 
 Basic usage:
 
@@ -132,16 +132,16 @@ Basic usage:
 
 Available Commands:
 
-- __completion__ generate the autocompletion script for the specified shell
-- __help__ Help about any command
-- __serve__ Launches the svc-fizzbuzz service webserver
-- __version__ Return service version
+- __completion__ generates the autocompletion script for the specified shell
+- __help__ help about any command
+- __serve__ launches the svc-fizzbuzz service webserver
+- __version__ returns service version
 
 To get __help__ simply run `svc-fizzbuzz help`.
 
-To launche the __API webserver__ run: `svc-fizzbuzz serve`
+To launch the __API webserver__ run: `svc-fizzbuzz serve`
 
-- Some flags are availale :
+- Some flags are available :
    - __--address__ (string) (short __-a__)
       - Must be used to set the HTTP server address.
       - ex: `127.0.0.1:13000`
@@ -181,7 +181,7 @@ To launche the __API webserver__ run: `svc-fizzbuzz serve`
    - __/status__
       - Returns the service status.
    - __/metrics__
-      - Returns the prometheus metrics.
+      - Returns the __prometheus__ metrics.
    - __/api/v1/fizzbuzz__
       - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
       - Query String (or __POST__ body parameters):
@@ -191,7 +191,7 @@ To launche the __API webserver__ run: `svc-fizzbuzz serve`
           - `str1` (__string__) default value `fizz`
           - `str2` (__string__) default value `buzz`
    - __/api/v1/fizzbuzz/top__
-      - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
+      - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of that endpoint. And returns the parameters corresponding to it.
 
 ## Examples
 
@@ -221,7 +221,7 @@ Should return
 
 ### /api/v1/fizzbuzz
 
-This the core api endpoint. This endpoint returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
+This is the core API endpoint. This endpoint returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
 
 ```shell
 $ curl "localhost:8080/api/v1/fizzbuzz"
@@ -241,7 +241,7 @@ The query string (or __POST__ body parameters):
   - `str1` (__string__) default value `fizz`
   - `str2` (__string__) default value `buzz`
 
-⚠️ All of them are optional, if is missing the default value is considered.
+⚠️ All of them are optional, if missing the default value is considered.
 
 ```shell
 $ curl "localhost:8080/api/v1/fizzbuzz?limit=10"
@@ -253,7 +253,7 @@ Should return only ten values of the original fizzbuzz.
 {"fizzbuzz":["1","2","fizz","4","buzz","fizz","7","8","fizz","buzz"]}
 ```
 
-More complexe query:
+More complex query:
 
 ```shell
 $ curl "localhost:8080/api/v1/fizzbuzz?limit=10&int1=2&int3=4&str1=bon&str2=coin"
@@ -265,7 +265,7 @@ Should return only ten values of a custom fizzbuzz.
 {"fizzbuzz":["1","bon","3","bon","coin","bon","7","bon","9","boncoin"]}
 ```
 
-⚠️ There no restriction on the htpp verb so a __POST__, __PUT__, __PATCH__ methods are accepted and valid. It is the same to all endpoints.
+⚠️ There is no restriction on the HTTP verb so __POST__, __PUT__, __PATCH__ methods are accepted and valid. It is the same to all endpoints.
 
 So all of these calls
 
@@ -284,7 +284,7 @@ Should return only ten values of a custom fizzbuzz.
 {"fizzbuzz":["1","bon","3","bon","coin","bon","7","bon","9","boncoin"]}
 ```
 
-⚠️ If a bad parameters is send, an error is returned with the `422 Unprocessable Entity` with the reason of the error.
+⚠️ If bad parameters are send, an error is returned with the `422 Unprocessable Entity` with the reason of the error.
 
 So :
 
@@ -330,7 +330,7 @@ Should return only one error.
 
 ### /api/v1/fizzbuzz/top
 
-This endpoint returns the usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
+This endpoint returns the usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of that endpoint. And returns the parameters corresponding to it.
 
 ```shell
 $ curl "localhost:8080/api/v1/fizzbuzz/top"
@@ -385,7 +385,7 @@ fizzbuzz_http_requests_duration_millisecond_count{code="Unprocessable Entity",me
 
 ### Not found
 
-All others call return an `404 Not Found` error.
+All others calls return an `404 Not Found` error.
 
 ```shell
 $ curl -v "localhost:8080/does_not_exists"
@@ -402,7 +402,7 @@ Should return.
 
 ## Contribute
 
-This repository follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and standard [git flow](https://danielkummer.github.io/git-flow-cheatsheet/).
+This repository follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) and standard [git flow](https://danielkummer.github.io/git-flow-cheatsheet/).
 
 See package documentation on [pkg.go.dev](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz).
 
@@ -425,7 +425,7 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 - `make clean` - Removing all generated files (compiled files, code coverage, ...).
 - `make docker-tag` - Generate `.env` file to __docker-compose__.
 - `make docker` - Generate __docker__ image.
-- `make docker-push` - Push the __docker__ image to the repository (use `DOCKER_REGISTRY` and `DOCKER_IMAGE_NAME` like this like this `DOCKER_REGISTRY={{hostname}}:{{port}} make docker-push`)
+- `make docker-push` - Push the __docker__ image to the repository (use `DOCKER_REGISTRY` and `DOCKER_IMAGE_NAME` like this `DOCKER_REGISTRY={{hostname}}:{{port}} make docker-push`)
 - `make docker-run` - Run service with __docker__.
 - `make docker-rm` - Remove service from __docker__.
 - `make compose-up` - Run `docker-compose up -d`.
@@ -441,10 +441,10 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 - `core` - The directory is the core domain layer.
 - `hack` - The directory contains some shell scripts.
 - `helpers` - The directory contains a helpers package.
-- `infra` - The directory is contains some infrastructure code to __docker-compose__.
-- `middlewares` - The directory contains all http middlewares.
-- `service` - The directory is the serviice layer.
-- `store` - The directory is persitence layer.
+- `infra` - The directory contains some infrastructure code to __docker-compose__.
+- `middlewares` - The directory contains all HTTP middlewares.
+- `service` - The directory is the service layer.
+- `store` - The directory is persistence layer.
 - `vendor` - The directory is `go mod` vendoring.
 
 ### Notes
