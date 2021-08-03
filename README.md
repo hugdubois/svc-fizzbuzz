@@ -88,8 +88,8 @@ Install localy (__baremetal__) (needs a redis server) :
 
 Install via __Docker__ (needs a redis server) :
 
-    $ docker pull hugdubois/svc-fizzbuzz:0.0.6_dev
-    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.6_dev serve --database-connect localhost:6379
+    $ docker pull hugdubois/svc-fizzbuzz:0.0.6
+    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.6 serve --database-connect localhost:6379
 
 __NOTE__ : __docker__ images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 

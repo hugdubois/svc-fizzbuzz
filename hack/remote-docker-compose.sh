@@ -2,7 +2,7 @@
 
 BRANCH=develop
 BASE_URL=https://raw.githubusercontent.com/hugdubois/svc-fizzbuzz/$BRANCH
-SVC_TAG=0.0.6_dev
+SVC_TAG=0.0.6
 
 mkdir -p svc-fizzbuzz-compose
 cd svc-fizzbuzz-compose
