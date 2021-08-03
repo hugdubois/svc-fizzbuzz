@@ -3,7 +3,7 @@ module github.com/hugdubois/svc-fizzbuzz
 go 1.16
 
 require (
-	github.com/diggs/go-backoff v0.0.0-20170517084504-f7b9f7e6b83b
+	github.com/Diggs/go-backoff v0.0.0-20170517084504-f7b9f7e6b83b
 	github.com/felixge/httpsnoop v1.0.2
 	github.com/go-redis/redis/v8 v8.11.1
 	github.com/go-redis/redismock/v8 v8.0.6
