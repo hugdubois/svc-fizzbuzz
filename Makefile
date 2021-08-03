@@ -51,6 +51,12 @@ clean:
 	@-rm -rf _build
 	@touch .env
 	@-rm .env
+	@touch coverage.txt
+	@-rm coverage.txt
+	@touch coverage.out
+	@-rm coverage.out
+	@touch dump.rdb
+	@-rm dump.rdb
 
 docker-tag:
 	@echo "$(NAME): docker-tag task"
