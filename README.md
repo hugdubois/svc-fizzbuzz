@@ -1,5 +1,9 @@
 # Simple fizzbuzz microservice
 
+[![Build Status](https://travis-ci.com/hugdubois/svc-fizzbuzz.svg?branch=develop)](https://travis-ci.com/hugdubois/svc-fizzbuzz)
+[![codecov](https://codecov.io/gh/hugdubois/svc-fizzbuzz/branch/develop/graph/badge.svg?token=E6E9CSRY80)](https://codecov.io/gh/hugdubois/svc-fizzbuzz)
+[![License: MIT](https://img.shields.io/badge/License-MIT-violet.svg)](https://opensource.org/licenses/MIT)
+
 The original fizzbuzz consists in writing all numbers from 1 to 100, and just replacing all multiples of 3 by "fizz", all multiples of 5 by "buzz", and all multiples of 15 by "fizzbuzz".  The output would look like this:
 
 ```
@@ -46,12 +50,12 @@ todo
 - [x] nice requests log
 - [x] allows CORS
 - [x] endpoint to expose prometheus metrics
-- [ ] test coverage >~ 80% (core 100%)
+- [x] CI
+- [x] test coverage >~ 80% (core 100%)
 - [ ] good documentation
 - [ ] (bonus) add a cache
 - [x] docker / docker-compose
 - [x] simple k8s deployment
     - [ ] use kustomize to bump TAG in k8s-deployment.yaml
 - [ ] (extra bonus) exposes an openapi / swagger file
-- [ ] (extra bonus) CI
-- [ ] (fix) no middleware on health check and readiness endpoints
+- [ ] TLS support

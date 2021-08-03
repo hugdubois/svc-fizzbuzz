@@ -11,7 +11,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-func TestMetricsMiddleware(t *testing.T) {
+func Test_MetricsMiddleware(t *testing.T) {
 	http.HandleFunc("/a-endpoint", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Hello world")
 	})

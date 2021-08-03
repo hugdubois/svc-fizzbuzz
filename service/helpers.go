@@ -1,5 +1,4 @@
-// Package handlers provides the http handlers.
-package handlers
+package service
 
 import (
 	"fmt"
@@ -8,17 +7,7 @@ import (
 	"strconv"
 
 	"github.com/hugdubois/svc-fizzbuzz/core"
-	"github.com/hugdubois/svc-fizzbuzz/helpers/hits"
 )
-
-var (
-	// fizzbuzzHits store the fizzbuzz hits
-	fizzbuzzHits *hits.Hits
-)
-
-func init() {
-	fizzbuzzHits = hits.NewHits("fizzbuzz")
-}
 
 // parseIntValue parse an expected int parameter
 // if the parameter is missing a default value is returned
@@ -95,7 +84,11 @@ func fizzbuzzHit(params core.FizzBuzzParams) {
 
 // fizzbuzzTopHit retreives the top fizzbuzz hits
 func fizzbuzzTopHit() (*core.FizzBuzzParams, int64, error) {
-	top, count := fizzbuzzHits.Top()
+	top, count, err := fizzbuzzHits.Top()
+	if err != nil {
+		return nil, 0, err
+	}
+
 	req, err := http.NewRequest("GET", "?"+top, nil)
 	if err != nil {
 		return nil, 0, err

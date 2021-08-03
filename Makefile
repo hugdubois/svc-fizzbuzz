@@ -18,9 +18,20 @@ build:
 		-o _build/$(NAME) \
 	main.go
 
+version:
+	@echo $(VERSION)
+
 test:
 	@echo "$(NAME): test task"
-	@go test ./... -v -race
+	@go test ./... -race
+
+test-v:
+	@echo "$(NAME): test-v task"
+	@go test ./... -race -v
+
+test-live:
+	@echo "$(NAME): test-live task"
+	@while true; do $(MAKE) test; echo "\nPress [CTRL+C] to exit this loop..." ; sleep 5; done
 
 test-cover:
 	@echo "$(NAME): test-cover task"
@@ -51,12 +62,18 @@ clean:
 	@-rm -rf _build
 	@touch .env
 	@-rm .env
+	@touch coverage.txt
+	@-rm coverage.txt
+	@touch coverage.out
+	@-rm coverage.out
+	@touch dump.rdb
+	@-rm dump.rdb
 
 docker-tag:
 	@echo "$(NAME): docker-tag task"
 	@echo "TAG=$(DOCKER_TAG)" > .env
 
-docker: docker-tag
+docker: test docker-tag
 	@echo "$(NAME): docker task"
 	@docker build -t $(DOCKER_IMAGE_NAME):$(DOCKER_TAG) .
 
@@ -81,6 +98,10 @@ compose-up: docker-tag
 compose-down:
 	@echo "$(NAME): compose-down task"
 	@docker-compose down
+
+compose-ps:
+	@echo "$(NAME): compose-down task"
+	@docker-compose ps
 
 k8s-deploy:
 	@echo "$(NAME): k8s-deploy task"

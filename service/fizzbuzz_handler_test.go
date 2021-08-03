@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
@@ -7,10 +7,17 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+
+	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
+
+func init() {
+	fizzbuzzHits = helpers.NewMockHits("fizzbuzz")
+}
 
 // assertValidFizzBuzz is a helper function to test the valid parameters
 func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
+	var fizzbuzzMsg FizzBuzzResponse
 	t.Helper()
 
 	ts := httptest.NewServer(http.DefaultServeMux)
@@ -19,14 +26,14 @@ func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
 	req, _ := http.NewRequest("GET", ts.URL+url, nil)
 	resp, _ := http.DefaultClient.Do(req)
 
-	if got, want := resp.StatusCode, 200; got != want {
+	if got, want := resp.StatusCode, http.StatusOK; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatalf("Got an error when reading body: %s", err.Error())
 	}
-	var fizzbuzzMsg FizzBuzzResponse
+
 	err = json.Unmarshal(data, &fizzbuzzMsg)
 	if err != nil {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())
@@ -47,7 +54,7 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	req, _ := http.NewRequest("GET", ts.URL+url, nil)
 	resp, _ := http.DefaultClient.Do(req)
 
-	if got, want := resp.StatusCode, http.StatusBadRequest; got != want {
+	if got, want := resp.StatusCode, http.StatusUnprocessableEntity; got != want {
 		t.Fatalf("Invalid status code, got %d but want %d", got, want)
 	}
 	data, err := ioutil.ReadAll(resp.Body)
@@ -65,8 +72,11 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	}
 }
 
-func TestFizzBuzzWithoutParams(t *testing.T) {
-	http.HandleFunc("/fizzbuzz", FizzBuzzHandler)
+// Test_FizzBuzzHandler test FizzBuzzHandler
+func Test_FizzBuzzHandler(t *testing.T) {
+	svc := NewService()
+
+	http.HandleFunc("/fizzbuzz", svc.FizzBuzzHandler)
 
 	assertValidFizzBuzz(
 		t,
@@ -174,7 +184,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?limit=INVALID&int1=2&int2=3",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'limit' must be a positive number - got (INVALID)",
 		},
 	)
@@ -182,7 +192,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int1=INVALID&int2=3",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'int1' must be a positive number - got (INVALID)",
 		},
 	)
@@ -191,7 +201,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int2=INVALID",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: 'int2' must be a positive number - got (INVALID)",
 		},
 	)
@@ -200,7 +210,7 @@ func TestFizzBuzzWithoutParams(t *testing.T) {
 		t,
 		"/fizzbuzz?int2=-1",
 		ErrorMessage{
-			Code:    http.StatusBadRequest,
+			Code:    http.StatusUnprocessableEntity,
 			Message: "Bad parameter: multiple must be a positive number - got (int2: -1)",
 		},
 	)

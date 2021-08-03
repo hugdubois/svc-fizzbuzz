@@ -52,8 +52,12 @@ data/certs
 # protoc tool
 _tools/protoc
 
+# redis db
+dump.rdb
+
 # local build
 .env
 _build/
 svc-fizzbuzz
 coverage.out
+coverage.txt
