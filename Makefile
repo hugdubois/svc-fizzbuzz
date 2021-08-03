@@ -21,6 +21,10 @@ build:
 version:
 	@echo $(VERSION)
 
+tools:
+	@echo "$(NAME): tools task"
+	@cd _tools && make
+
 test:
 	@echo "$(NAME): test task"
 	@go test ./... -race
@@ -54,10 +58,16 @@ serve: build
 	@echo "$(NAME): serve task"
 	@_build/svc-fizzbuzz serve -d
 
+gen-swagger: tools
+	@echo "$(NAME): gen-swagger task"
+	@_tools/bin/swag init service/service.go
+
 clean:
 	@echo "$(NAME): clean task"
 	@touch svc-fizzbuzz
 	@-rm svc-fizzbuzz
+	@mkdir -p _tools/bin
+	@-rm -rf _tools/bin
 	@mkdir -p _build
 	@-rm -rf _build
 	@touch .env

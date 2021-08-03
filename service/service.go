@@ -6,6 +6,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
+	"github.com/hugdubois/svc-fizzbuzz/docs"
 	"github.com/hugdubois/svc-fizzbuzz/middlewares"
 	"github.com/hugdubois/svc-fizzbuzz/store"
 )
@@ -64,6 +65,9 @@ func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 
 	// prometheus metrics handler
 	router.Handle("/metrics", promhttp.Handler())
+
+	// swagger documentation
+	router.Handle("/swagger.json", docs.Handler())
 
 	// welcome msg on / else return a 404
 	router.Handle("/", useMiddlewares(svc.IndexHandler))
