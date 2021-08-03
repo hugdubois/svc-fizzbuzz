@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/diggs/go-backoff"
+	"github.com/Diggs/go-backoff"
 	"github.com/go-redis/redis/v8"
 	log "github.com/sirupsen/logrus"
 )
