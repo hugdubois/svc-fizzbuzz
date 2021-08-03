@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
@@ -9,8 +9,15 @@ import (
 )
 
 func Test_ErrorHandler(t *testing.T) {
+	var errorMsg ErrorMessage
+
+	svc := NewService()
+
+	ts := httptest.NewServer(svc.NewRouter("*"))
+	defer ts.Close()
+
 	http.HandleFunc("/error", func(w http.ResponseWriter, r *http.Request) {
-		ErrorHandler(w, r, http.StatusUnprocessableEntity, "Bad Parameter")
+		svc.ErrorHandler(w, r, http.StatusUnprocessableEntity, "Bad Parameter")
 	})
 	testserver := httptest.NewServer(http.DefaultServeMux)
 
@@ -25,7 +32,6 @@ func Test_ErrorHandler(t *testing.T) {
 		t.Fatalf("Got an error when reading body: %s", err.Error())
 	}
 
-	var errorMsg ErrorMessage
 	err = json.Unmarshal(data, &errorMsg)
 	if err != nil {
 		t.Fatalf("Got an error when parsing json: %s", err.Error())

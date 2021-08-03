@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
@@ -18,10 +18,12 @@ func Test_FizzbuzzTopHandler(t *testing.T) {
 	var fizzbuzzTopMsg FizzBuzzTopResponse
 	fizzbuzzHits.Reset()
 
-	http.HandleFunc("/fizzbuzz/top", FizzBuzzTopHandler)
+	svc := NewService()
 
 	ts := httptest.NewServer(http.DefaultServeMux)
 	defer ts.Close()
+
+	http.HandleFunc("/fizzbuzz/top", svc.FizzBuzzTopHandler)
 
 	// first call to fizzbuzz/top
 	req, _ := http.NewRequest("GET", ts.URL+"/fizzbuzz/top", nil)

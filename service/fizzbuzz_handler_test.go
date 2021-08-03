@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
@@ -74,7 +74,9 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 
 // Test_FizzBuzzHandler test FizzBuzzHandler
 func Test_FizzBuzzHandler(t *testing.T) {
-	http.HandleFunc("/fizzbuzz", FizzBuzzHandler)
+	svc := NewService()
+
+	http.HandleFunc("/fizzbuzz", svc.FizzBuzzHandler)
 
 	assertValidFizzBuzz(
 		t,

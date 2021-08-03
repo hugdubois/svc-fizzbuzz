@@ -1,4 +1,4 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
@@ -7,23 +7,18 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/core"
 )
 
-// FizzBuzzResponse is the message returned by FizzBuzz handler
-type FizzBuzzResponse struct {
-	FizzBuzz []string `json:"fizzbuzz"`
-}
-
 // FizzBuzzHandler is a http handler which returns the FizzBuzz core function
-func FizzBuzzHandler(w http.ResponseWriter, r *http.Request) {
+func (svc Service) FizzBuzzHandler(w http.ResponseWriter, r *http.Request) {
 	params, err := parseFizzbuzzParams(r)
 
 	if err != nil {
-		ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
+		svc.ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
 	fizzbuzz, err := core.FizzBuzz(*params)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
+		svc.ErrorHandler(w, r, http.StatusUnprocessableEntity, err.Error())
 		return
 	}
 
@@ -33,7 +28,7 @@ func FizzBuzzHandler(w http.ResponseWriter, r *http.Request) {
 
 	output, err := json.Marshal(msg)
 	if err != nil {
-		ErrorHandler(w, r, http.StatusInternalServerError, err.Error())
+		svc.ErrorHandler(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
 

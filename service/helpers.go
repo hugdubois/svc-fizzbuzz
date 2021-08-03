@@ -1,5 +1,4 @@
-// Package handlers provides the http handlers.
-package handlers
+package service
 
 import (
 	"fmt"
@@ -8,14 +7,7 @@ import (
 	"strconv"
 
 	"github.com/hugdubois/svc-fizzbuzz/core"
-	"github.com/hugdubois/svc-fizzbuzz/store"
 )
-
-var fizzbuzzHits store.Hitable
-
-func init() {
-	fizzbuzzHits = store.NewHits("fizzbuzz")
-}
 
 // parseIntValue parse an expected int parameter
 // if the parameter is missing a default value is returned

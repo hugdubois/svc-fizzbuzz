@@ -1,18 +1,12 @@
-package handlers
+package service
 
 import (
 	"encoding/json"
 	"net/http"
 )
 
-// ErrorMessage is the message returned when an error has occurred
-type ErrorMessage struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
-
 // ErrorHandler is the http handler wich returns an error
-func ErrorHandler(w http.ResponseWriter, r *http.Request, status int, msg string) {
+func (svc Service) ErrorHandler(w http.ResponseWriter, r *http.Request, status int, msg string) {
 	eMsg := ErrorMessage{
 		Code:    status,
 		Message: msg,
