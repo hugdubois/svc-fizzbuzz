@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.com/hugdubois/svc-fizzbuzz.svg?branch=develop)](https://travis-ci.com/hugdubois/svc-fizzbuzz)
 [![codecov](https://codecov.io/gh/hugdubois/svc-fizzbuzz/branch/develop/graph/badge.svg?token=E6E9CSRY80)](https://codecov.io/gh/hugdubois/svc-fizzbuzz)
-[![License: MIT](https://img.shields.io/badge/License-MIT-violet.svg)](https://opensource.org/licenses/MIT)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/hugdubois/svc-fizzbuzz)](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz)
+[![License: MIT](https://img.shields.io/badge/License-MIT-violet.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of contents
 
@@ -13,7 +13,7 @@
 - [Usage](#usage)
 - [Examples](#examples)
 - [Contribute](#contribute)
-- [Improvements](#improvements)
+- [Roadmap](#roadmap)
 - [Authors](#authors)
 - [Support](#support)
 - [License](#license)
@@ -41,29 +41,29 @@ The server needs to be:
 
 The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoints:
 
- - __/__
-    - Forwards to __/version__ endpoint.
+- __/__
+   - Forwards to __/version__ endpoint.
 
- - __/version__
-    - Returns the service version.
+- __/version__
+   - Returns the service version.
 
- - __/status__
-    - Returns the service status.
+- __/status__
+   - Returns the service status.
 
- - __/metrics__
-    - Returns the prometheus metrics.
+- __/metrics__
+   - Returns the prometheus metrics.
 
- - __/api/v1/fizzbuzz__
-    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
-    - Query String (or __POST__ body parameters):
-        - `linit` (__positive integer__) max value `100 000`
-        - `int1` (__positive integer__) default value `3`
-        - `int2` (__positive integer__) default value `5`
-        - `str1` (__string__) default value `fizz`
-        - `str2` (__string__) default value `buzz`
+- __/api/v1/fizzbuzz__
+   - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
+   - Query String (or __POST__ body parameters):
+       - `linit` (__positive integer__) max value `100 000`
+       - `int1` (__positive integer__) default value `3`
+       - `int2` (__positive integer__) default value `5`
+       - `str1` (__string__) default value `fizz`
+       - `str2` (__string__) default value `buzz`
 
- - __/api/v1/fizzbuzz/top__
-    - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
+- __/api/v1/fizzbuzz/top__
+   - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
 
 ## Technologies
 
@@ -91,8 +91,7 @@ Install via __Docker__ (need a redis server) :
     $ docker pull hugdubois/svc-fizzbuzz:0.0.5
     $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.5 serve --database-connect localhost:6379
 
-__NOTE__ :
-  - the images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
+__NOTE__ : the images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 
 ### Docker compose
 
@@ -100,19 +99,20 @@ Install via __docker-compose__ (without git clone) (need curl) :
 
     $ curl https://raw.githubusercontent.com/hugdubois/svc-fizzbuzz/master/hack/remote-docker-compose.sh | sh
 
+__NOTE__ : This scripts will create a __svc-fizzbuzz-compose__ with all required files
+
 With `git clone` simply do :
 
     $ git clone https://github.com/hugdubois/svc-fizzbuzz
     $ cd svc-fizzbuzz
     $ make compose-up
 
-__NOTE__ :
-  - This scripts will create a __svc-fizzbuzz-compose__ with all required files
-  - Some services are exposed:
-    - __svc-fizzbuzz__ on http://localhost:8080/
-    - __prometheus__ on http://localhost:9090/
-    - __grafana__ on http://localhost:3000/
-        - some dashboards can be found [here](./infra/grafana/dashboards)
+Some services are exposed:
+
+- __svc-fizzbuzz__ on http://localhost:8080/
+- __prometheus__ on http://localhost:9090/
+- __grafana__ on http://localhost:3000/
+  - some dashboards can be found [here](./infra/grafana/dashboards)
 
 ### Kubernetes
 
@@ -132,66 +132,66 @@ Basic usage:
 
 Available Commands:
 
-  - __completion__ generate the autocompletion script for the specified shell
-  - __help__ Help about any command
-  - __serve__ Launches the svc-fizzbuzz service webserver
-  - __version__ Return service version
+- __completion__ generate the autocompletion script for the specified shell
+- __help__ Help about any command
+- __serve__ Launches the svc-fizzbuzz service webserver
+- __version__ Return service version
 
 To get __help__ simply run `svc-fizzbuzz help`.
 
 To launche the __API webserver__ run: `svc-fizzbuzz serve`
 
-  - Some flags are availale :
-     - __--address__ (string) (short __-a__)
-        - Must be used to set the HTTP server address.
-        - ex: `127.0.0.1:13000`
-        - default: `:8080`
-     - __--cors-origin__ (string) (short __-c__)
-        - Must be used to set the _Cross Origin Resource Sharing AllowedOrigins_. It's a string separed by `|`.
-        - ex: `http://*domain1.com|http://*domain2.com`
-        - default: `*`
-     - __--database-connect__ (string)
-        - Must be used to set the redis server connection informations. __[[db:]password@]host:port__.
-        - ex: `1:passW0rd@redis-server:6379`
-        - default: `localhost:6379`
-     - __--debug__ (boolean)
-        - Must be used to force debug mode.
-        - ex: `1:passW0rd@redis-server:6379`
-        - default: `localhost:6379`
-     - __--help__ (string)
-        - Must be used to get help.
-     - __--read-timeout__ (duration)
-        - Must be used to set the server read timeout (5s,5m,5h) before connection is cancelled.
-        - ex: `10s`
-        - default: `5s`
-     - __--shutdown-timeout__ (duration)
-        - Must be used to set the server shutdown timeout (5s,5m,5h) graceful shutdown.
-        - ex: `15s`
-        - default: `10s`
-     - __--write-timeout__ (duration)
-        - Must be used to set the server write timeout (5s,5m,5h) before connection is cancelled.
-        - ex: `15s`
-        - default: `10s`
+- Some flags are availale :
+   - __--address__ (string) (short __-a__)
+      - Must be used to set the HTTP server address.
+      - ex: `127.0.0.1:13000`
+      - default: `:8080`
+   - __--cors-origin__ (string) (short __-c__)
+      - Must be used to set the _Cross Origin Resource Sharing AllowedOrigins_. It's a string separed by `|`.
+      - ex: `http://*domain1.com|http://*domain2.com`
+      - default: `*`
+   - __--database-connect__ (string)
+      - Must be used to set the redis server connection informations. __[[db:]password@]host:port__.
+      - ex: `1:passW0rd@redis-server:6379`
+      - default: `localhost:6379`
+   - __--debug__ (boolean)
+      - Must be used to force debug mode.
+      - ex: `1:passW0rd@redis-server:6379`
+      - default: `localhost:6379`
+   - __--help__ (string)
+      - Must be used to get help.
+   - __--read-timeout__ (duration)
+      - Must be used to set the server read timeout (5s,5m,5h) before connection is cancelled.
+      - ex: `10s`
+      - default: `5s`
+   - __--shutdown-timeout__ (duration)
+      - Must be used to set the server shutdown timeout (5s,5m,5h) graceful shutdown.
+      - ex: `15s`
+      - default: `10s`
+   - __--write-timeout__ (duration)
+      - Must be used to set the server write timeout (5s,5m,5h) before connection is cancelled.
+      - ex: `15s`
+      - default: `10s`
 
-  - The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoints:
-     - __/__
-        - Forwards to __/version__ endpoint.
-     - __/version__
-        - Returns the service version.
-     - __/status__
-        - Returns the service status.
-     - __/metrics__
-        - Returns the prometheus metrics.
-     - __/api/v1/fizzbuzz__
-        - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
-        - Query String (or __POST__ body parameters):
-            - `linit` (__positive integer__) max value `100 000`
-            - `int1` (__positive integer__) default value `3`
-            - `int2` (__positive integer__) default value `5`
-            - `str1` (__string__) default value `fizz`
-            - `str2` (__string__) default value `buzz`
-     - __/api/v1/fizzbuzz/top__
-        - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
+- The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoints:
+   - __/__
+      - Forwards to __/version__ endpoint.
+   - __/version__
+      - Returns the service version.
+   - __/status__
+      - Returns the service status.
+   - __/metrics__
+      - Returns the prometheus metrics.
+   - __/api/v1/fizzbuzz__
+      - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
+      - Query String (or __POST__ body parameters):
+          - `linit` (__positive integer__) max value `100 000`
+          - `int1` (__positive integer__) default value `3`
+          - `int2` (__positive integer__) default value `5`
+          - `str1` (__string__) default value `fizz`
+          - `str2` (__string__) default value `buzz`
+   - __/api/v1/fizzbuzz/top__
+      - Returns usage statistics of the __/api/v1/fizzbuzz__ endpoint. It allows the users to know what the number of hits of this endpoint. And returns the parameters corresponding to it.
 
 ## Examples
 
@@ -233,7 +233,8 @@ Should return a original fizzbuzz
 {"fizzbuzz":["1","2","fizz","4","buzz","fizz","7","8","fizz","buzz","11","fizz","13","14","fizzbuzz","16","17","fizz","19","buzz","fizz","22","23","fizz","buzz","26","fizz","28","29","fizzbuzz","31","32","fizz","34","buzz","fizz","37","38","fizz","buzz","41","fizz","43","44","fizzbuzz","46","47","fizz","49","buzz","fizz","52","53","fizz","buzz","56","fizz","58","59","fizzbuzz","61","62","fizz","64","buzz","fizz","67","68","fizz","buzz","71","fizz","73","74","fizzbuzz","76","77","fizz","79","buzz","fizz","82","83","fizz","buzz","86","fizz","88","89","fizzbuzz","91","92","fizz","94","buzz","fizz","97","98","fizz","buzz"]}
 ```
 
-This query string (or __POST__ body parameters):
+The query string (or __POST__ body parameters):
+
   - `linit` (__positive integer__) max value `100 000`
   - `int1` (__positive integer__) default value `3`
   - `int2` (__positive integer__) default value `5`
@@ -246,7 +247,7 @@ This query string (or __POST__ body parameters):
 $ curl "localhost:8080/api/v1/fizzbuzz?limit=10"
 ```
 
-Should return only ten value of the original fizzbuzz.
+Should return only ten values of the original fizzbuzz.
 
 ```json
 {"fizzbuzz":["1","2","fizz","4","buzz","fizz","7","8","fizz","buzz"]}
@@ -258,7 +259,7 @@ More complexe query:
 $ curl "localhost:8080/api/v1/fizzbuzz?limit=10&int1=2&int3=4&str1=bon&str2=coin"
 ```
 
-Should return only ten value of a custom fizzbuzz.
+Should return only ten values of a custom fizzbuzz.
 
 ```json
 {"fizzbuzz":["1","bon","3","bon","coin","bon","7","bon","9","boncoin"]}
@@ -277,7 +278,7 @@ $ curl -XPUT -d "limit=10&int1=2&int3=4&str1=bon&str2=coin" "localhost:8080/api/
 $ curl -XPATCH -d "limit=10&int1=2&int3=4&str1=bon&str2=coin" "localhost:8080/api/v1/fizzbuzz"
 ```
 
-Should return only ten value of a custom fizzbuzz.
+Should return only ten values of a custom fizzbuzz.
 
 ```json
 {"fizzbuzz":["1","bon","3","bon","coin","bon","7","bon","9","boncoin"]}
@@ -452,7 +453,7 @@ The statistics to __/api/v1/fizzbuzz/top__ endpoint are stored in a [redis sorte
 
 To retrieve the most used request a simple [ZREVRANGE k 0 0 WITHSCORES](https://redis.io/commands/zrevrange) is good enough.
 
-## Improvements
+## Roadmap
 
 - [x] separate core domain (without dependencies)
 - [x] nice cli with usage and help
@@ -462,12 +463,11 @@ To retrieve the most used request a simple [ZREVRANGE k 0 0 WITHSCORES](https://
 - [x] endpoint to expose prometheus metrics
 - [x] CI
 - [x] test coverage >~ 80% (core 100%)
-- [ ] add a cache
-- [ ] add openapi
 - [x] docker / docker-compose
 - [x] simple k8s deployment
     - [ ] use kustomize to bump TAG in k8s-deployment.yaml
-- [ ] generate and expose an openapi file
+- [ ] add openapi
+- [ ] add a cache
 - [ ] TLS support
 
 ## Authors
