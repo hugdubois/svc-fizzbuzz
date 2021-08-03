@@ -8,6 +8,16 @@ import (
 )
 
 // StatusHandler is a http handler that returns the service status.
+//
+// @Summary service status
+//
+// @Description returns the service status
+//
+// @Produce json
+// @Success 200 {object} StatusResponse
+// @Failure 500 {object} ErrorMessage
+//
+// @Router /status [get]
 func (svc Service) StatusHandler(w http.ResponseWriter, r *http.Request) {
 	pong, err := pingStore()
 	if err != nil {

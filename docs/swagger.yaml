@@ -1,0 +1,155 @@
+definitions:
+  core.FizzBuzzParams:
+    properties:
+      int1:
+        description: 'all multiples of [Int1] are replaced by [Str1] (classic fizzbuzz: 3)'
+        type: integer
+      int2:
+        description: 'all multiples of [Int2] are replaced by [Str2] (classic fizzbuzz: 5)'
+        type: integer
+      limit:
+        description: limit of the loop
+        type: integer
+      str1:
+        description: 'replacement string for multiples of Int1 (classic fizzbuzz: "fizz")'
+        type: string
+      str2:
+        description: 'replacement string for multiples of [Int2] (classic fizzbuzz: "buzz")'
+        type: string
+    type: object
+  service.ErrorMessage:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  service.FizzBuzzResponse:
+    properties:
+      fizzbuzz:
+        items:
+          type: string
+        type: array
+    type: object
+  service.FizzBuzzTopResponse:
+    properties:
+      data:
+        $ref: '#/definitions/service.FizzBuzzTopResponseData'
+    type: object
+  service.FizzBuzzTopResponseData:
+    properties:
+      count_request:
+        type: integer
+      params:
+        $ref: '#/definitions/core.FizzBuzzParams'
+    type: object
+  service.Service:
+    properties:
+      name:
+        type: string
+      version:
+        type: string
+    type: object
+  service.StatusResponse:
+    properties:
+      store-alive:
+        type: boolean
+      svc-alive:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/fizzbuzz:
+    get:
+      description: |-
+        Returns a list of strings with numbers from 1 to `limit`, where:
+        all multiples of `int1` are replaced by `str1`,
+        all multiples of `int2` are replaced by `str2`,
+        all multiples of `int1` and `int2` are replaced by `str1str2`.
+      parameters:
+      - description: fizzbuzz from 1 to limit
+        in: query
+        name: limit
+        type: integer
+      - description: multiples replaced 1
+        in: query
+        name: int1
+        type: integer
+      - description: replacement string 1
+        in: query
+        name: str1
+        type: string
+      - description: multiples replaced 2
+        in: query
+        name: int2
+        type: integer
+      - description: replacement string 2
+        in: query
+        name: str2
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.FizzBuzzResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/service.ErrorMessage'
+        "500":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/service.ErrorMessage'
+      summary: fizzbuzz computation
+  /api/v1/fizzbuzz/top:
+    get:
+      description: |-
+        Returns usage statistics of the /api/v1/fizzbuzz endpoint.
+        It allows the users to know what the number of hits of that endpoint.
+        And returns the parameters corresponding to it.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.FizzBuzzTopResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ErrorMessage'
+      summary: Most used /api/v1/fizzbuzz request usage statistics.
+  /status:
+    get:
+      description: returns the service status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.StatusResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ErrorMessage'
+      summary: service status
+  /version:
+    get:
+      description: Returns the service version
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.Service'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/service.ErrorMessage'
+      summary: Service version
+swagger: "2.0"

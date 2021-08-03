@@ -53,6 +53,9 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
 - __/metrics__
    - Returns the __prometheus__ metrics.
 
+- __/swagger.json__
+   - Returns the __swagger__ service description file.
+
 - __/api/v1/fizzbuzz__
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
    - Query String (or __POST__ body parameters):
@@ -182,6 +185,8 @@ To launch the __API webserver__ run: `svc-fizzbuzz serve`
       - Returns the service status.
    - __/metrics__
       - Returns the __prometheus__ metrics.
+   - __/swagger.json__
+      - Returns the __swagger__ service description.
    - __/api/v1/fizzbuzz__
       - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
       - Query String (or __POST__ body parameters):
@@ -383,6 +388,24 @@ fizzbuzz_http_requests_duration_millisecond_count{code="Unprocessable Entity",me
 ...
 ```
 
+### /swagger.json
+
+This endpoint exposes the __swagger__ service description.
+
+```shell
+$ curl "localhost:8080/metrics"
+```
+
+Should return.
+
+```json
+{
+    ...
+    "swagger": "2.0",
+    ...
+}
+```
+
 ### Not found
 
 All others calls return an `404 Not Found` error.
@@ -439,6 +462,7 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 
 - `cmd` - The directory contains the `cli` commands.
 - `core` - The directory is the core domain layer.
+- `docs` - The directory is dedicated to __swagger__ it contains generated files by swag tool.
 - `hack` - The directory contains some shell scripts.
 - `helpers` - The directory contains a helpers package.
 - `infra` - The directory contains some infrastructure code to __docker-compose__.
@@ -460,13 +484,13 @@ To retrieve the most used request a simple [ZREVRANGE k 0 0 WITHSCORES](https://
 - [x] light simple http service (with graceful shutdown and errors recovering)
 - [x] nice requests log
 - [x] allows CORS
-- [x] endpoint to expose prometheus metrics
+- [x] endpoint to expose __prometheus__ metrics
 - [x] CI
 - [x] test coverage >~ 80% (core 100%)
 - [x] docker / docker-compose
 - [x] simple k8s deployment
     - [ ] use kustomize to bump TAG in k8s-deployment.yaml
-- [ ] add openapi
+- [x] add swagger file and expose it on /swagger.json endpoint
 - [ ] add a cache
 - [ ] TLS support
 
