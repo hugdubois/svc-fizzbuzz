@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Test_CaptureOutput provides the CaptureOutput test.
 func Test_CaptureOutput(t *testing.T) {
 	expected := "hello world"
 	out := CaptureOutput(func() {
@@ -26,6 +27,7 @@ func Test_CaptureOutput(t *testing.T) {
 	}
 }
 
+// Test_MockHits provides the MockHits test.
 func Test_MockHits(t *testing.T) {
 	expected := map[string]map[string]int64{}
 	if got := reflect.DeepEqual(expected, members); !got {

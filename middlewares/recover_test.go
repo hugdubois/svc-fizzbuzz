@@ -10,6 +10,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// assertRecover is a helper to assert recover.
 func assertRecover(t *testing.T, url string, fn http.HandlerFunc) {
 	t.Helper()
 
@@ -36,6 +37,7 @@ func assertRecover(t *testing.T, url string, fn http.HandlerFunc) {
 	}
 }
 
+// Test_RecoverMiddleware provides RecoverMiddleware test.
 func Test_RecoverMiddleware(t *testing.T) {
 	assertRecover(t, "/recover-string", func(http.ResponseWriter, *http.Request) { panic("foo") })
 	assertRecover(t, "/recover-error", func(http.ResponseWriter, *http.Request) { panic(fmt.Errorf("foo %s", "bar")) })

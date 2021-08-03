@@ -11,6 +11,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_VersionHandler provides the VersionHandler test.
 func Test_VersionHandler(t *testing.T) {
 	var (
 		resp       *http.Response

@@ -11,9 +11,11 @@ import (
 )
 
 func init() {
+	// mock fizzbuzz hits persistence.
 	fizzbuzzHits = helpers.NewMockHits("fizzbuzz")
 }
 
+// Test_FizzbuzzTopHandler provides the FizzbuzzTopHandler test.
 func Test_FizzbuzzTopHandler(t *testing.T) {
 	var fizzbuzzTopMsg FizzBuzzTopResponse
 	fizzbuzzHits.Reset()

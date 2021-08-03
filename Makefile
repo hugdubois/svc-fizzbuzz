@@ -5,7 +5,7 @@ GO_PACKAGE_BASE = github.com/hugdubois
 GO_PACKAGE_NAME = $(GO_PACKAGE_BASE)/$(NAME)
 
 DOCKER_TAG = $(shell cat VERSION | tr +- __)
-DOCKER_IMAGE_NAME = hugdubois/$(NAME)
+DOCKER_IMAGE_NAME?=hugdubois/$(NAME)
 DOCKER_REGISTRY?=docker.io
 DOCKER_RUN_PORT?=8080
 

@@ -11,6 +11,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_LoggingMiddleware provides the LoggingMiddleware test.
 func Test_LoggingMiddleware(t *testing.T) {
 	http.HandleFunc("/logged-endpoint", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "response body")

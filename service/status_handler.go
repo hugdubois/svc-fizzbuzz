@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// StatusHandler is a http handler which returns the service status
+// StatusHandler is a http handler that returns the service status.
 func (svc Service) StatusHandler(w http.ResponseWriter, r *http.Request) {
 	pong, err := pingStore()
 	if err != nil {

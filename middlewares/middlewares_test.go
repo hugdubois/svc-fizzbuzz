@@ -18,6 +18,7 @@ func taggedMiddleware(tag string) Middleware {
 	}
 }
 
+// Test_UseMiddleware provides UseMiddleware test.
 func Test_UseMiddleware(t *testing.T) {
 	useMiddleware := UseMiddleware(
 		taggedMiddleware("A"),

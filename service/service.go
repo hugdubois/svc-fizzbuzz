@@ -1,4 +1,4 @@
-// service package is the simple fizzbuzz service
+// Package service is the simple fizzbuzz service.
 package service
 
 import (
@@ -25,13 +25,13 @@ func init() {
 	fizzbuzzHits = store.NewHits("fizzbuzz")
 }
 
-// Service is the fizzbuzz service
+// Service is the fizzbuzz service.
 type Service struct {
 	Name    string `json:"name"`
 	Version string `json:"version"`
 }
 
-// NewService return new fizzbuzz service
+// NewService return new fizzbuzz service.
 func NewService() *Service {
 	return &Service{
 		Name:    name,
@@ -39,7 +39,7 @@ func NewService() *Service {
 	}
 }
 
-// NewRouter provides a http.serverMux
+// NewRouter provides a new http.serverMux to fizzbuzz service.
 func (svc Service) NewRouter(corsOrigin string) *http.ServeMux {
 	router := http.NewServeMux()
 

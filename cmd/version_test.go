@@ -6,6 +6,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_VersionCmd provides the VersionCmd test.
 func Test_VersionCmd(t *testing.T) {
 	out := helpers.CaptureOutput(func() {
 		rootCmd.SetArgs([]string{"version"})

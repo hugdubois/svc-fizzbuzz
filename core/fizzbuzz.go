@@ -6,8 +6,8 @@ import (
 	"strconv"
 )
 
-// FizzBuzzLimitMax is the maximum allowed limit value
-// here 100_000 is an arbitrary value, this nust be depend of product owner.
+// FizzBuzzLimitMax is the maximum allowed limit value here 100_000 is an
+// arbitrary value, this nust be depend of product owner.
 const FizzBuzzLimitMax = 100_000
 
 // FizzBuzzParams is a struct with all the parameters to FizzBuzz function
@@ -41,7 +41,7 @@ func (params FizzBuzzParams) HasError() error {
 	return nil
 }
 
-// DefaultFizzBuzzParams are the parameters of the original fizzbuzz
+// DefaultFizzBuzzParams are the parameters of the original fizzbuzz.
 var DefaultFizzBuzzParams = FizzBuzzParams{
 	Limit: 100,
 	Int1:  3,
@@ -50,12 +50,13 @@ var DefaultFizzBuzzParams = FizzBuzzParams{
 	Str2:  "buzz",
 }
 
-// FizzBuzz function take a [p FizzBuzzParams] and return a list of strings with numbers from 1 to [p.Limit], where:
+// FizzBuzz function take a [p FizzBuzzParams] and return a list of strings
+// with numbers from 1 to [p.Limit], where:
 //  - all multiples of [p.Int1] are replaced by [p.Str1],
 //  - all multiples of [p.Int2] are replaced by [p.Str2],
 //  - all multiples of [p.Int1] and [p.Int2] are replaced by [p.Str1][p.Str2]
 //
-// if [p FizzBuzzParams] is invalid an error is returned
+// if [p FizzBuzzParams] is invalid an error is returned.
 //
 // Example of use :
 //  fizzbuzz, err := core.FizzBuzz(

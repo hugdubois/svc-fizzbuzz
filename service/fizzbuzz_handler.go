@@ -7,7 +7,8 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/core"
 )
 
-// FizzBuzzHandler is a http handler which returns the FizzBuzz core function
+// FizzBuzzHandler is a http handler that returns the result of FizzBuzz core
+// function.
 func (svc Service) FizzBuzzHandler(w http.ResponseWriter, r *http.Request) {
 	params, err := parseFizzbuzzParams(r)
 

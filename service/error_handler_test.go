@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Test_ErrorHandler provides the ErrorHandler test.
 func Test_ErrorHandler(t *testing.T) {
 	var errorMsg ErrorMessage
 

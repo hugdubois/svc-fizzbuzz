@@ -38,7 +38,7 @@ func init() {
 	prometheus.MustRegister(inFlightGauge)
 }
 
-// NewMetrics return a new metrics middleware here prometheus
+// NewMetrics returns a new metrics middleware (here this is prometheus).
 func NewMetrics() Middleware {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

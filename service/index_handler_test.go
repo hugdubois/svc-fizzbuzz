@@ -11,6 +11,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_IndexHandler provides the FizzbuzzTopHandler test.
 func Test_IndexHandler(t *testing.T) {
 	var (
 		versionMsg Service
@@ -54,6 +55,8 @@ func Test_IndexHandler(t *testing.T) {
 	}
 }
 
+// Test_NotFound provides the IndexHandler test (when the url doesn't match
+// anything).
 func Test_NotFound(t *testing.T) {
 	var (
 		notFoundMsg ErrorMessage

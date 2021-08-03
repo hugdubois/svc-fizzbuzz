@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// assertInvalidFizzBuzz is a helper function to test the invalid parameters
+// assertInvalidFizzBuzz is a helper function to test the invalid parameters.
 func assertInvalidFizzBuzz(t *testing.T, params FizzBuzzParams, errMsg string) {
 	t.Helper()
 	_, err := FizzBuzz(params)
@@ -18,7 +18,7 @@ func assertInvalidFizzBuzz(t *testing.T, params FizzBuzzParams, errMsg string) {
 	}
 }
 
-// assertValidFizzBuzz is a helper function to test the valid parameters
+// assertValidFizzBuzz is a helper function to test the valid parameters.
 func assertValidFizzBuzz(t *testing.T, params FizzBuzzParams, expected []string) {
 	t.Helper()
 	res, err := FizzBuzz(params)
@@ -33,7 +33,8 @@ func assertValidFizzBuzz(t *testing.T, params FizzBuzzParams, expected []string)
 	}
 }
 
-// TestValidFizzBuzzParams is a function to test the FizzBuzz function with some valid parameters
+// TestValidFizzBuzzParams is a function to test the FizzBuzz function with
+// some valid parameters.
 func Test_ValidFizzBuzzParams(t *testing.T) {
 	//default params
 	assertValidFizzBuzz(
@@ -66,7 +67,8 @@ func Test_ValidFizzBuzzParams(t *testing.T) {
 	)
 }
 
-// TestInvalidFizzBuzzParams is a function to test the FizzBuzz function with some invalid parameters
+// TestInvalidFizzBuzzParams is a function to test the FizzBuzz function with
+// some invalid parameters.
 func Test_InvalidFizzBuzzParams(t *testing.T) {
 	assertInvalidFizzBuzz(
 		t,

@@ -2,7 +2,7 @@ package middlewares
 
 import "net/http"
 
-// NewCors returns a middleware that allow request to be made through origin
+// NewCors returns a middleware that allow request to be made through origin.
 func NewCors(origin string) Middleware {
 	if origin != "" {
 		return func(h http.Handler) http.Handler {
