@@ -20,7 +20,15 @@ build:
 
 test:
 	@echo "$(NAME): test task"
-	@go test ./... -v -race
+	@go test ./... -race
+
+test-v:
+	@echo "$(NAME): test-v task"
+	@go test ./... -race -v
+
+test-live:
+	@echo "$(NAME): test-live task"
+	@while true; do $(MAKE) test; echo "\nPress [CTRL+C] to exit this loop..." ; sleep 5; done
 
 test-cover:
 	@echo "$(NAME): test-cover task"
