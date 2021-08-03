@@ -56,7 +56,7 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
 - __/swagger.json__
    - Returns the __swagger__ service description file.
 
-- __/api/v1/fizzbuzz__
+- [__ api v1 fizzbuzz__](__/api/v1/fizzbuzz__)
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
    - Query String (or __POST__ body parameters):
        - `linit` (__positive integer__) max value `100 000`
@@ -437,6 +437,7 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 
 - `make build` - (default) build the service and inject the version (`-ldflags`).
 - `make version` - Display current version (__VERSION__ file).
+- `make tools` - Build `tools` that are in `_tools` directory.
 - `make test` - Run test.
 - `make test-v` - Run test on verbose mode.
 - `make test-live` - Run test on infinite shell loop.
@@ -444,7 +445,8 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 - `make test-cover-profile` - Run test with coverage and generate a profile coverage file.
 - `make test-cover-report` - Run test with coverage UI on a browser (`go tool cover -html=...`).
 - `make test-cover-func` - Run test with total coverage computation (`go tool cover -func=...`).
-- `make serve` - Build and launch the server api with the debug mode activate.
+- `make gen-swagger` - Generate swagger service declaration from project annotation.
+- `make serve` - Build and launch the server API with the debug mode activate.
 - `make clean` - Removing all generated files (compiled files, code coverage, ...).
 - `make docker-tag` - Generate `.env` file to __docker-compose__.
 - `make docker` - Generate __docker__ image.
@@ -460,6 +462,7 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 
 ### Directories structure
 
+- `_tools` - The directory contains some used tools (cf. `make tools`)
 - `cmd` - The directory contains the `cli` commands.
 - `core` - The directory is the core domain layer.
 - `docs` - The directory is dedicated to __swagger__ it contains generated files by swag tool.
