@@ -12,7 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// CaptureOutput captures log and standard outputs
+// CaptureOutput captures log and standard outputs.
 func CaptureOutput(f func()) string {
 	reader, writer, err := os.Pipe()
 	if err != nil {

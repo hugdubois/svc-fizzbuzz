@@ -6,7 +6,8 @@ import (
 	"testing"
 )
 
-// assertCorsMiddleware is a helper function to test the valid the CorsMiddleware
+// assertCorsMiddleware is a helper function to test the valid the
+// CorsMiddleware.
 func assertCorsMiddleware(t *testing.T, verb string) {
 	t.Helper()
 
@@ -28,7 +29,8 @@ func assertCorsMiddleware(t *testing.T, verb string) {
 	}
 }
 
-// assertCorsMiddlewareEmpty is a helper function to test the valid the CorsMiddleware
+// assertCorsMiddlewareEmpty is a helper function to test the valid the
+// CorsMiddleware (when origin is not set).
 func assertCorsMiddlewareEmpty(t *testing.T, verb string) {
 	t.Helper()
 
@@ -51,6 +53,7 @@ func assertCorsMiddlewareEmpty(t *testing.T, verb string) {
 	}
 }
 
+// Test_CorsMiddleware provides the CorsMiddleware test.
 func Test_CorsMiddleware(t *testing.T) {
 	http.HandleFunc("/cors", func(resp http.ResponseWriter, req *http.Request) {})
 	assertCorsMiddleware(t, http.MethodOptions)
@@ -58,6 +61,7 @@ func Test_CorsMiddleware(t *testing.T) {
 	assertCorsMiddleware(t, http.MethodGet)
 }
 
+// Test_CorsMiddleware provides the CorsMiddleware test (when origin is not set).
 func Test_CorsMiddlewareWithEmptyOrigin(t *testing.T) {
 	http.HandleFunc("/cors-empty", func(resp http.ResponseWriter, req *http.Request) {})
 	assertCorsMiddlewareEmpty(t, http.MethodOptions)

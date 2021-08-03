@@ -12,7 +12,7 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
+// rootCmd represents the base command when called without any subcommands.
 var (
 	svc     = service.NewService()
 	svcName = fmt.Sprintf("%s-%s", svc.Name, svc.Version)

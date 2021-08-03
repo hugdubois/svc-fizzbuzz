@@ -11,6 +11,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_StatusHandler provides the StatusHandler test.
 func Test_StatusHandler(t *testing.T) {
 	var (
 		statusMsg StatusResponse

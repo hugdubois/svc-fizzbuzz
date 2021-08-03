@@ -6,7 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// NewRecover returns a middleware to recover the errors
+// NewRecover returns a middleware to recover the errors.
 func NewRecover() Middleware {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

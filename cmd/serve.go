@@ -15,7 +15,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/store"
 )
 
-// serveCmd represents the serve command
+// serveCmd represents the serve command.
 var (
 	debugMode          bool
 	serverAddress      string
@@ -114,6 +114,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 }
 
+// serve is the core function of this command.
 func serve() {
 	initLogger()
 
@@ -133,7 +134,7 @@ func serve() {
 	waitForShutdown(srv)
 }
 
-// initalize the logger with debug mode if is needed
+// initLogger initalizes the logger with debug mode if is needed.
 func initLogger() {
 	if strings.HasSuffix(svc.Version, "+dev") || debugMode {
 		log.SetLevel(log.DebugLevel)
@@ -145,6 +146,7 @@ func initLogger() {
 	}
 }
 
+// initLogger initalizes the data store.
 func initStore() {
 	// initialize data store
 	store.Setup(context.Background(), databaseConnect)
@@ -157,7 +159,7 @@ func initStore() {
 	log.Infof("store ping: %s", pong)
 }
 
-// Got service router and return a http server
+// getServer retreives the service router and returns a http server.
 func getServer() *http.Server {
 	mux := svc.NewRouter(corsAllowedOrigins)
 	return &http.Server{
@@ -168,7 +170,7 @@ func getServer() *http.Server {
 	}
 }
 
-// gracefull shutdown
+// waitForShutdown provides the graceful shutdown.
 func waitForShutdown(srv *http.Server) {
 	stop := make(chan os.Signal)
 	signal.Notify(stop, os.Interrupt)
@@ -187,7 +189,7 @@ func waitForShutdown(srv *http.Server) {
 	log.Printf("%s down\n", svcName)
 }
 
-// start the http server
+// launchServer starts the http server.
 func launchServer(srv *http.Server) {
 	log.Printf(
 		"%s listening on %s with %v timeout",

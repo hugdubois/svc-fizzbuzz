@@ -7,6 +7,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_RootCmd provides the RootCmd test.
 func Test_RootCmd(t *testing.T) {
 	out := helpers.CaptureOutput(func() {
 		Execute()

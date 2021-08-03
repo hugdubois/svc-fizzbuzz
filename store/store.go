@@ -1,3 +1,4 @@
+// Package store provides persitence layer.
 package store
 
 import (

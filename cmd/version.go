@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// cliCmd represents the cli command
+// versionCmd represents the version command.
 var (
 	versionCmd = &cobra.Command{
 		Use:   "version",
@@ -35,6 +35,7 @@ func init() {
 
 }
 
+// version is the core function of this command.
 func version(cmd *cobra.Command, args []string) {
 	fmt.Printf("%s version %s - %s", svc.Name, svc.Version, svcName)
 }

@@ -10,6 +10,7 @@ func init() {
 	}
 }
 
+// Test_NewService provides the NewService test.
 func Test_NewService(t *testing.T) {
 	svc := NewService()
 	if got, want := svc.Name, name; got != want {

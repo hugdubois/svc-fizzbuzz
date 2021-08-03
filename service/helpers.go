@@ -9,9 +9,9 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/core"
 )
 
-// parseIntValue parse an expected int parameter
-// if the parameter is missing a default value is returned
-// if the parameter is not an int an error is returned
+// parseIntValue parse an expected int parameter.
+// if the parameter is missing a default value is returned.
+// if the parameter is not an int an error is returned.
 func parseIntValue(r *http.Request, name string, dVal int) (int, error) {
 	val := r.FormValue(name)
 	if val == "" {
@@ -25,8 +25,8 @@ func parseIntValue(r *http.Request, name string, dVal int) (int, error) {
 	return iVal, nil
 }
 
-// parseStringValue parse an expected string parameter
-// if the parameter is missing a default value is returned
+// parseStringValue parse an expected string parameter.
+// if the parameter is missing a default value is returned.
 func parseStringValue(r *http.Request, name string, dVal string) string {
 	val := r.FormValue(name)
 	if val == "" {
@@ -36,8 +36,8 @@ func parseStringValue(r *http.Request, name string, dVal string) string {
 	return val
 }
 
-// parseFizzbuzzParams parse request parameters and returns a FizzBuzzParams
-// if an error occured an error is returned
+// parseFizzbuzzParams parse request parameters and returns a FizzBuzzParams.
+// if an error occured an error is returned.
 func parseFizzbuzzParams(r *http.Request) (*core.FizzBuzzParams, error) {
 	p := core.DefaultFizzBuzzParams
 
@@ -65,7 +65,7 @@ func parseFizzbuzzParams(r *http.Request) (*core.FizzBuzzParams, error) {
 	return &p, nil
 }
 
-// encodeFizzbuzzParams encodes a FizzBuzzParams to a query string
+// encodeFizzbuzzParams encodes a FizzBuzzParams to a query string.
 func encodeFizzbuzzParams(params core.FizzBuzzParams) string {
 	qsParams := url.Values{}
 	qsParams.Add("limit", strconv.Itoa(params.Limit))
@@ -77,12 +77,12 @@ func encodeFizzbuzzParams(params core.FizzBuzzParams) string {
 	return qsParams.Encode()
 }
 
-// fizzbuzzHit add a fizzbuzz hit from a FizzBuzzParams
+// fizzbuzzHit add a fizzbuzz hit from a FizzBuzzParams.
 func fizzbuzzHit(params core.FizzBuzzParams) {
 	fizzbuzzHits.Add(encodeFizzbuzzParams(params), 1)
 }
 
-// fizzbuzzTopHit retreives the top fizzbuzz hits
+// fizzbuzzTopHit retreives the top fizzbuzz hits.
 func fizzbuzzTopHit() (*core.FizzBuzzParams, int64, error) {
 	top, count, err := fizzbuzzHits.Top()
 	if err != nil {

@@ -15,7 +15,7 @@ func init() {
 	fizzbuzzHits = helpers.NewMockHits("fizzbuzz")
 }
 
-// assertValidFizzBuzz is a helper function to test the valid parameters
+// assertValidFizzBuzz is a helper function to test the valid parameters.
 func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
 	var fizzbuzzMsg FizzBuzzResponse
 	t.Helper()
@@ -44,7 +44,7 @@ func assertValidFizzBuzz(t *testing.T, url string, expected FizzBuzzResponse) {
 	}
 }
 
-// assertInvalidFizzBuzz is a helper function to test the valid parameters
+// assertInvalidFizzBuzz is a helper function to test the invalid parameters.
 func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	t.Helper()
 
@@ -72,7 +72,7 @@ func assertInvalidFizzBuzz(t *testing.T, url string, expected ErrorMessage) {
 	}
 }
 
-// Test_FizzBuzzHandler test FizzBuzzHandler
+// Test_FizzBuzzHandler provides the FizzBuzzHandler test.
 func Test_FizzBuzzHandler(t *testing.T) {
 	svc := NewService()
 

@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// VersionHandler is a http handler which returns the service version
+// VersionHandler is a http handler that returns the service version.
 func (svc Service) VersionHandler(w http.ResponseWriter, r *http.Request) {
 	output, err := json.Marshal(svc)
 	if err != nil {

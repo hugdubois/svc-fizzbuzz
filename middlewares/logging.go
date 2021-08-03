@@ -8,7 +8,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// log before request
+// loggingMiddlewareBefore performs log before the request execution.
 func loggingMiddlewareBefore(entry *log.Entry, r *http.Request, t time.Time) *log.Entry {
 	// Try to get the request ID (correlation ID)
 	if reqID := r.Header.Get("X-Request-Id"); reqID != "" {
@@ -31,7 +31,7 @@ func loggingMiddlewareBefore(entry *log.Entry, r *http.Request, t time.Time) *lo
 	})
 }
 
-// log after request
+// loggingMiddlewareAfter performs log after the request execution.
 func loggingMiddlewareAfter(entry *log.Entry, metrics httpsnoop.Metrics, name string) *log.Entry {
 	return entry.WithFields(log.Fields{
 		"status":        metrics.Code,
@@ -41,7 +41,7 @@ func loggingMiddlewareAfter(entry *log.Entry, metrics httpsnoop.Metrics, name st
 	})
 }
 
-// NewLogging return a new logging middleware
+// NewLogging returns a new logging middleware.
 func NewLogging(name string) Middleware {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {

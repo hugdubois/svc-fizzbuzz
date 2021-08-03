@@ -5,8 +5,8 @@ import (
 	"net/http"
 )
 
-// FizzBuzzTopHandler is a http handler which returns the most used request of
-// the fizzbuzz endpoint call and it's parameters
+// FizzBuzzTopHandler is a http handler that returns the most used request of
+// the fizzbuzz endpoint call with it's parameters.
 func (svc Service) FizzBuzzTopHandler(w http.ResponseWriter, r *http.Request) {
 	params, countReq, err := fizzbuzzTopHit()
 	if err != nil {

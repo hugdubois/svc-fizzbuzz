@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// ErrorHandler is the http handler wich returns an error
+// ErrorHandler is the http handler that returns an error.
 func (svc Service) ErrorHandler(w http.ResponseWriter, r *http.Request, status int, msg string) {
 	eMsg := ErrorMessage{
 		Code:    status,

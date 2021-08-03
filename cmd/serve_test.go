@@ -9,6 +9,7 @@ import (
 	"github.com/hugdubois/svc-fizzbuzz/helpers"
 )
 
+// Test_ServeCmd provides the ServeCmd test.
 func Test_ServeCmd(t *testing.T) {
 	srv := getServer()
 
