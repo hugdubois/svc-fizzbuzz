@@ -1,4 +1,4 @@
-// Pakage docs provides the swagger definition of the service.
+// Package docs provides the swagger definition of the service.
 package docs
 
 import (
@@ -9,10 +9,10 @@ import (
 // Handler is a http handler that returns swagger definition of the service
 func Handler() http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
-		sw := &s{}
+		swag := &s{}
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprint(w, sw.ReadDoc())
+		fmt.Fprint(w, swag.ReadDoc())
 	}
 
 	return http.HandlerFunc(fn)
