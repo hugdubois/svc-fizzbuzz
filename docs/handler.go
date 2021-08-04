@@ -1,3 +1,4 @@
+// Pakage docs provides the swagger definition of the service.
 package docs
 
 import (

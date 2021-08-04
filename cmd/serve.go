@@ -134,7 +134,7 @@ func serve() {
 	waitForShutdown(srv)
 }
 
-// initLogger initalizes the logger with debug mode if is needed.
+// initLogger initializes the logger with debug mode if is needed.
 func initLogger() {
 	if strings.HasSuffix(svc.Version, "+dev") || debugMode {
 		log.SetLevel(log.DebugLevel)
@@ -146,7 +146,7 @@ func initLogger() {
 	}
 }
 
-// initLogger initalizes the data store.
+// initLogger initializes the data store.
 func initStore() {
 	// initialize data store
 	store.Setup(context.Background(), databaseConnect)

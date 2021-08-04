@@ -50,6 +50,7 @@ var members = make(map[string]map[string]int64)
 // MockHits is mockup of hits bag (store.Hits)
 type MockHits struct{ Key string }
 
+// NewMockHits retruns a new mockup of hits bag
 func NewMockHits(k string) store.Hitable {
 	return MockHits{Key: k}
 }

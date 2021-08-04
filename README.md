@@ -1,8 +1,13 @@
 # Simple fizzbuzz microservice
 
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/hugdubois/svc-fizzbuzz)
+[![GoReportCard example](https://goreportcard.com/badge/github.com/hugdubois/svc-fizzbuzz)](https://goreportcard.com/report/github.com/hugdubois/svc-fizzbuzz)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/hugdubois/svc-fizzbuzz)](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz)
+
 [![Build Status](https://travis-ci.com/hugdubois/svc-fizzbuzz.svg?branch=develop)](https://travis-ci.com/hugdubois/svc-fizzbuzz)
 [![codecov](https://codecov.io/gh/hugdubois/svc-fizzbuzz/branch/develop/graph/badge.svg?token=E6E9CSRY80)](https://codecov.io/gh/hugdubois/svc-fizzbuzz)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/hugdubois/svc-fizzbuzz)](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-violet.svg)](https://opensource.org/licenses/MIT)
 
 ## Table of contents
@@ -59,7 +64,7 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
 - [__ api v1 fizzbuzz__](__/api/v1/fizzbuzz__)
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
    - Query String (or __POST__ body parameters):
-       - `linit` (__positive integer__) max value `100 000`
+       - `linit` (__positive integer__) max value `100.000`
        - `int1` (__positive integer__) default value `3`
        - `int2` (__positive integer__) default value `5`
        - `str1` (__string__) default value `fizz`
@@ -91,8 +96,8 @@ Install localy (__baremetal__) (needs a redis server) :
 
 Install via __Docker__ (needs a redis server) :
 
-    $ docker pull hugdubois/svc-fizzbuzz:0.0.7
-    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.7 serve --database-connect localhost:6379
+    $ docker pull hugdubois/svc-fizzbuzz:0.0.8
+    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.8 serve --database-connect localhost:6379
 
 __NOTE__ : __docker__ images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 
@@ -190,7 +195,7 @@ To launch the __API webserver__ run: `svc-fizzbuzz serve`
    - __/api/v1/fizzbuzz__
       - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
       - Query String (or __POST__ body parameters):
-          - `linit` (__positive integer__) max value `100 000`
+          - `linit` (__positive integer__) max value `100.000`
           - `int1` (__positive integer__) default value `3`
           - `int2` (__positive integer__) default value `5`
           - `str1` (__string__) default value `fizz`
@@ -209,7 +214,7 @@ $ curl "localhost:8080/"
 Should return
 
 ```json
-{"name":"svc-fizzbuzz","version":"v0.0.5"}
+{"name":"svc-fizzbuzz","version":"v0.0.8"}
 ```
 
 ### /status
