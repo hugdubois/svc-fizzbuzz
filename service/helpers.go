@@ -37,7 +37,7 @@ func parseStringValue(r *http.Request, name string, dVal string) string {
 }
 
 // parseFizzbuzzParams parse request parameters and returns a FizzBuzzParams.
-// if an error occured an error is returned.
+// if an error occurred an error is returned.
 func parseFizzbuzzParams(r *http.Request) (*core.FizzBuzzParams, error) {
 	p := core.DefaultFizzBuzzParams
 
