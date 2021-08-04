@@ -214,7 +214,7 @@ $ curl "localhost:8080/"
 Should return
 
 ```json
-{"name":"svc-fizzbuzz","version":"v0.0.8"}
+{"name":"svc-fizzbuzz","version":"v1.0.0"}
 ```
 
 ### /status
