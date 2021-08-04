@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Nothing
 
+## 1.0.0 - 2021-08-03
+
+- fix: misspell
+- fix: docs
+
 ## 0.0.7 - 2021-08-03
 
 - add /swagger.json endpoint

@@ -62,7 +62,7 @@ spec:
     spec:                        # Spec for the container which will run in the Pod
       containers:
       - name: svc-fizzbuzz
-        image: hugdubois/svc-fizzbuzz:0.0.8
+        image: hugdubois/svc-fizzbuzz:1.0.0
         imagePullPolicy: Always
         args: ["serve", "--database-connect", "redis-master:6379"]
         ports:
