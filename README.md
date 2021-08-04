@@ -53,7 +53,10 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
 - __/metrics__
    - Returns the __prometheus__ metrics.
 
-- __/api/v1/fizzbuzz__
+- __/swagger.json__
+   - Returns the __swagger__ service description file.
+
+- [__ api v1 fizzbuzz__](__/api/v1/fizzbuzz__)
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
    - Query String (or __POST__ body parameters):
        - `linit` (__positive integer__) max value `100 000`
@@ -88,8 +91,8 @@ Install localy (__baremetal__) (needs a redis server) :
 
 Install via __Docker__ (needs a redis server) :
 
-    $ docker pull hugdubois/svc-fizzbuzz:0.0.6
-    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.6 serve --database-connect localhost:6379
+    $ docker pull hugdubois/svc-fizzbuzz:0.0.7
+    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.7 serve --database-connect localhost:6379
 
 __NOTE__ : __docker__ images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 
@@ -182,6 +185,8 @@ To launch the __API webserver__ run: `svc-fizzbuzz serve`
       - Returns the service status.
    - __/metrics__
       - Returns the __prometheus__ metrics.
+   - __/swagger.json__
+      - Returns the __swagger__ service description.
    - __/api/v1/fizzbuzz__
       - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
       - Query String (or __POST__ body parameters):
@@ -383,6 +388,24 @@ fizzbuzz_http_requests_duration_millisecond_count{code="Unprocessable Entity",me
 ...
 ```
 
+### /swagger.json
+
+This endpoint exposes the __swagger__ service description.
+
+```shell
+$ curl "localhost:8080/metrics"
+```
+
+Should return.
+
+```json
+{
+    ...
+    "swagger": "2.0",
+    ...
+}
+```
+
 ### Not found
 
 All others calls return an `404 Not Found` error.
@@ -414,6 +437,7 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 
 - `make build` - (default) build the service and inject the version (`-ldflags`).
 - `make version` - Display current version (__VERSION__ file).
+- `make tools` - Build `tools` that are in `_tools` directory.
 - `make test` - Run test.
 - `make test-v` - Run test on verbose mode.
 - `make test-live` - Run test on infinite shell loop.
@@ -421,7 +445,8 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 - `make test-cover-profile` - Run test with coverage and generate a profile coverage file.
 - `make test-cover-report` - Run test with coverage UI on a browser (`go tool cover -html=...`).
 - `make test-cover-func` - Run test with total coverage computation (`go tool cover -func=...`).
-- `make serve` - Build and launch the server api with the debug mode activate.
+- `make gen-swagger` - Generate swagger service declaration from project annotation.
+- `make serve` - Build and launch the server API with the debug mode activate.
 - `make clean` - Removing all generated files (compiled files, code coverage, ...).
 - `make docker-tag` - Generate `.env` file to __docker-compose__.
 - `make docker` - Generate __docker__ image.
@@ -437,8 +462,10 @@ CI is on [travis](https://travis-ci.com/github/hugdubois/svc-fizzbuzz) and [gith
 
 ### Directories structure
 
+- `_tools` - The directory contains some used tools (cf. `make tools`)
 - `cmd` - The directory contains the `cli` commands.
 - `core` - The directory is the core domain layer.
+- `docs` - The directory is dedicated to __swagger__ it contains generated files by swag tool.
 - `hack` - The directory contains some shell scripts.
 - `helpers` - The directory contains a helpers package.
 - `infra` - The directory contains some infrastructure code to __docker-compose__.
@@ -460,13 +487,13 @@ To retrieve the most used request a simple [ZREVRANGE k 0 0 WITHSCORES](https://
 - [x] light simple http service (with graceful shutdown and errors recovering)
 - [x] nice requests log
 - [x] allows CORS
-- [x] endpoint to expose prometheus metrics
+- [x] endpoint to expose __prometheus__ metrics
 - [x] CI
 - [x] test coverage >~ 80% (core 100%)
 - [x] docker / docker-compose
 - [x] simple k8s deployment
     - [ ] use kustomize to bump TAG in k8s-deployment.yaml
-- [ ] add openapi
+- [x] add swagger file and expose it on /swagger.json endpoint
 - [ ] add a cache
 - [ ] TLS support
 
