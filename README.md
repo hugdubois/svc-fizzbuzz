@@ -1,7 +1,7 @@
 # Simple fizzbuzz microservice
 
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
-[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/hugdubois/svc-fizzbuzz)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/hugdubois/svc-fizzbuzz.svg)](https://github.com/hugdubois/svc-fizzbuzz)
 [![GoReportCard example](https://goreportcard.com/badge/github.com/hugdubois/svc-fizzbuzz)](https://goreportcard.com/report/github.com/hugdubois/svc-fizzbuzz)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/hugdubois/svc-fizzbuzz)](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz)
 
