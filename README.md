@@ -123,7 +123,7 @@ Install via __kubernetes__ (needs kubectl):
 
     $ kubectl apply -f https://raw.githubusercontent.com/hugdubois/svc-fizzbuzz/master/k8s-deployment.yaml
 
-__NOTE__: if you use __minikube__ do `minikube service svc-fizzbuzz` to expose and get the service ip.
+__NOTE__: if you use __minikube__ do `minikube service svc-fizzbuzz` to expose and get the service ip or simply use `kubectl port-forward deployment/svc-fizzbuzz 8080:8080`.
 
 ## Usage
 
