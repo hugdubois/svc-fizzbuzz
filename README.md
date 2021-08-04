@@ -1,7 +1,7 @@
 # Simple fizzbuzz microservice
 
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
-[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/hugdubois/svc-fizzbuzz)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/hugdubois/svc-fizzbuzz.svg)](https://github.com/hugdubois/svc-fizzbuzz)
 [![GoReportCard example](https://goreportcard.com/badge/github.com/hugdubois/svc-fizzbuzz)](https://goreportcard.com/report/github.com/hugdubois/svc-fizzbuzz)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/hugdubois/svc-fizzbuzz)](https://pkg.go.dev/github.com/hugdubois/svc-fizzbuzz)
 
@@ -96,8 +96,8 @@ Install localy (__baremetal__) (needs a redis server) :
 
 Install via __Docker__ (needs a redis server) :
 
-    $ docker pull hugdubois/svc-fizzbuzz:0.0.8
-    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:0.0.8 serve --database-connect localhost:6379
+    $ docker pull hugdubois/svc-fizzbuzz:1.0.0
+    $ docker run -d --name=svc-fizzbuzz --net=host -it hugdubois/svc-fizzbuzz:1.0.0 serve --database-connect localhost:6379
 
 __NOTE__ : __docker__ images can be found on [dockerhub](https://hub.docker.com/r/hugdubois/svc-fizzbuzz).
 
