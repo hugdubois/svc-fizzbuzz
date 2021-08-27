@@ -61,7 +61,7 @@ The __svc-fizzbuzz__ microservice exposes a REST API with the following endpoint
 - __/swagger.json__
    - Returns the __swagger__ service description file.
 
-- [__ api v1 fizzbuzz__](__/api/v1/fizzbuzz__)
+- __/api/v1/fizzbuzz__
    - Returns a list of strings with numbers from 1 to `limit`, where: all multiples of `int1` are replaced by `str1`, all multiples of `int2` are replaced by `str2`, all multiples of `int1` and `int2` are replaced by `str1str2`.
    - Query String (or __POST__ body parameters):
        - `linit` (__positive integer__) max value `100.000`
